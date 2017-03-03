@@ -1,0 +1,16 @@
+{{ define "content" }}
+<p>Profile page </p>
+<table>
+  <form action="/bc/profile" method="post">
+    <tr>
+      <td> Name </td>
+      <td> <input type="text" name="name" /> </td>
+    </tr>
+    <tr>
+      <td> <input class="mdl-button" type="submit" value="Submit" /></td>
+    </tr>
+  </form>
+</table>
+{{ end }}
+{{ define "script" }}
+{{ end }}

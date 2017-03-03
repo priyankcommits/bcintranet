@@ -1,0 +1,15 @@
+/* Login Page */
+.login-bg {
+    background-image: url("../images/matrix.jpg");
+    background-color: #cccccc;
+    background-size: 100% 100%;
+}
+span.mdl-layout-title {
+  background-color: #2196F3;
+  color: #FFF;
+}
+
+/* Common */
+.white-text {
+  color: #FFF;
+}
