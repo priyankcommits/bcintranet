@@ -15,20 +15,15 @@
         <div class="mdl-layout-spacer"></div>
         <!-- Navigation. We hide it in small screens. -->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-                  <button id="demo-menu-lower-right"
-        class="mdl-button mdl-js-button mdl-button--icon">
-  <i class="material-icons">more_vert</i>
-</button>
-
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-    for="demo-menu-lower-right">
-    <li class="mdl-menu__item"><a class="mdl-navigation__link" href="/bc/profile"> Profile </a></li>
-    <li class="mdl-menu__item"><a class="" href="/logout"> Logout </a></li>
-</ul>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
+          <button id="demo-menu-lower-right"
+            class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+            for="demo-menu-lower-right">
+            <li class="mdl-menu__item"><a class="mdl-navigation__link black-text" href="/bc/profile"> Profile </a></li>
+            <li class="mdl-menu__item"><a class="mdl-navigation__link black-text" href="/logout"> Logout </a></li>
+          </ul>
         </nav>
       </div>
     </header>
@@ -52,12 +47,31 @@
           <div class="mdl-cell mdl-cell--2-col">
             Notifications
           </div>
+          <div class="mdl-cell mdl-cell--12-col">
+            <div id="toast-message" class="mdl-js-snackbar mdl-snackbar">
+              <div class="mdl-snackbar__text"></div>
+              <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
   </div>
   <!-- JavaScript Libraries -->
   {{ template "script" }}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="/static/js/material.min.js"></script>
+  <script>
+    $(window).load(function () {
+      {{ if .notification }}
+      var notification = document.querySelector('#toast-message');
+      notification.MaterialSnackbar.showSnackbar(
+        {
+          message: '{{.message}}'
+        }
+      );
+      {{end}}
+    });
+  </script>
 </body>
 </html>

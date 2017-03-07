@@ -18,6 +18,10 @@
 			"Rev": "cf955c3d1f2c27ee96f93e9738085c762ff5f49d"
 		},
 		{
+			"ImportPath": "github.com/gorilla/schema",
+			"Rev": "64644a2fced21dbfa12f7ca184bdcedeb2513dd4"
+		},
+		{
 			"ImportPath": "github.com/gorilla/securecookie",
 			"Comment": "v1.1-5-gfa5329f",
 			"Rev": "fa5329f913702981df43dcb2a380bac429c810b5"
@@ -43,26 +47,6 @@
 			"ImportPath": "github.com/urfave/negroni",
 			"Comment": "v0.2.0-100-g61dbefc",
 			"Rev": "61dbefc515b4dede6eb2de7df1e54d49edce892d"
-		},
-		{
-			"ImportPath": "goji.io",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
-		},
-		{
-			"ImportPath": "goji.io/internal",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
-		},
-		{
-			"ImportPath": "goji.io/pat",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
-		},
-		{
-			"ImportPath": "goji.io/pattern",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",

@@ -17,6 +17,11 @@ func GothLoginMiddleware(res http.ResponseWriter, req *http.Request, next http.H
 	if session.Values["gplus"] == nil {
 		http.Redirect(res, req, urls.ROOT_PATH, http.StatusTemporaryRedirect)
 	}
+	if session.Values["userid"] != "" {
+		context.Set(req, "userid", session.Values["userid"])
+	} else {
+		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusTemporaryRedirect)
+	}
 	next(res, req)
 }
 
@@ -28,9 +33,9 @@ func SetUserMiddleware(res http.ResponseWriter, req *http.Request, next http.Han
 	} else {
 		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusTemporaryRedirect)
 	}
-	err := store.FindProfile(session.Values["userid"].(string))
+	err := store.GetProfile(session.Values["userid"].(string))
 	if err != nil {
-		http.Redirect(res, req, urls.PROFILE_PATH_EDIT, http.StatusTemporaryRedirect)
+		http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusTemporaryRedirect)
 	} else {
 		http.Redirect(res, req, urls.HOME_PATH, http.StatusTemporaryRedirect)
 	}

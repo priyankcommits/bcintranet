@@ -6,6 +6,7 @@ import (
 	"text/template"
 
 	"bcintranet/store"
+	"bcintranet/templates"
 	"bcintranet/urls"
 	"bcintranet/utils"
 
@@ -15,7 +16,7 @@ import (
 )
 
 func LoginController(res http.ResponseWriter, req *http.Request) {
-	t, _ := template.ParseFiles("templates/login.html")
+	t, _ := template.ParseFiles(templates.LOGIN)
 	t.Execute(res, nil)
 }
 
@@ -39,9 +40,9 @@ func AuthCallbackController(res http.ResponseWriter, req *http.Request) {
 	session, _ := utils.GetValidSession(req)
 	session.Values["userid"] = gothUser.UserID
 	session.Save(req, res)
-	err = store.FindUser(gothUser.UserID)
+	_, err = store.GetUser(gothUser.UserID)
 	if err != nil {
-		store.InsertUserData(
+		store.CreateUserData(
 			gothUser.UserID, gothUser.FirstName, gothUser.LastName,
 			gothUser.Email, gothUser.AccessToken,
 		)

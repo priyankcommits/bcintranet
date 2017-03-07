@@ -10,6 +10,9 @@ span.mdl-layout-title {
 }
 
 /* Common */
+.black-text {
+  color: #000 !important;
+}
 .white-text {
-  color: #FFF;
+  color: #FFF !important;
 }

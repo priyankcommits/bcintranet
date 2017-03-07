@@ -1,13 +1,61 @@
 {{ define "content" }}
-<p>Profile page </p>
+<div class="docs-text-styling component-title">
+  <h3>Edit Profile</h3>
+</div>
 <table>
-  <form action="/bc/profile" method="post">
+  <form action="" method="post">
     <tr>
-      <td> Name </td>
-      <td> <input type="text" name="name" /> </td>
+      <td>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" required type="text" name="Tagline">
+          <label class="mdl-textfield__label" for="tag_line">Tag Line</label>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td> <input class="mdl-button" type="submit" value="Submit" /></td>
+      <td>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" required type="text" name="GitHub">
+          <label class="mdl-textfield__label" for="github">GitHub Link</label>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" required type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="Age">
+          <label class="mdl-textfield__label" for="age">Age</label>
+          <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" required type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="Mobile">
+          <label class="mdl-textfield__label" for="mobile">Phone</label>
+          <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" required type="text" name="BloodGroup">
+          <label class="mdl-textfield__label" for="blood">Blood Group</label>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" required type="text" name="address">
+          <label class="mdl-textfield__label" for="address">Address</label>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td> <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" value="Save" /></td>
     </tr>
   </form>
 </table>

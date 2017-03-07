@@ -13,6 +13,7 @@ import (
 )
 
 func init() {
+	// goth package cookie store initialization
 	gothic.Store = sessions.NewCookieStore([]byte("gplus"))
 }
 
@@ -25,11 +26,11 @@ func main() {
 			"http://localhost:3000/auth/gplus/callback",
 		),
 	)
-	// get pat router
+	// get pat router from routers package
 	p := routers.GetRouter()
-	// use negroni middleware
+	// use negroni handler
 	n := negroni.Classic()
 	n.UseHandler(p)
-	// run on 3001 and using gin on 3000
+	// run on 3001 and using gin(repl) on 3000
 	n.Run(":3001")
 }

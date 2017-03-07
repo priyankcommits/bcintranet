@@ -34,23 +34,24 @@ func ensureIndex(collection string, pk string, s *mgo.Session) {
 	}
 }
 
-func FindUser(userId string) error {
-	session := GetSession("User", "ID")
+func GetUser(userId string) (models.User, error) {
+	// get user data
+	session := GetSession("User", "UserID")
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("User")
 	var user models.User
 	err := c.Find(bson.M{"userid": userId}).One(&user)
-	return err
+	return user, err
 }
 
-func InsertUserData(userId string, firstName string, lastName string, email string, accessToken string) error {
-	session := GetSession("User", "ID")
+func CreateUserData(userId string, firstName string, lastName string, email string, accessToken string) error {
+	// Create user data on auth callback
+	session := GetSession("User", "UserID")
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("User")
 	var user models.User
-	user.ID = bson.NewObjectId()
 	user.UserID = userId
 	user.FirstName = firstName
 	user.LastName = lastName
@@ -60,12 +61,22 @@ func InsertUserData(userId string, firstName string, lastName string, email stri
 	return err
 }
 
-func FindProfile(userId string) error {
-	session := GetSession("Profile", "ID")
+func GetProfile(userId string) error {
+	// Find profile
+	session := GetSession("Profile", "UserID")
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("Profile")
 	var profile models.Profile
 	err := c.Find(bson.M{"userid": userId}).One(&profile)
+	return err
+}
+
+func CreateProfile(profile *models.Profile) error {
+	session := GetSession("Profile", "UserID")
+	session = session.Copy()
+	defer session.Close()
+	c := session.DB("bcintranet").C("Profile")
+	err := c.Insert(&profile)
 	return err
 }

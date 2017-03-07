@@ -14,23 +14,25 @@ import (
 // registers all routes for the application.
 func GetRouter() *pat.Router {
 	// url paths imported from urls package
-	// common routes
 	common := pat.New()
 	// static route
 	common.PathPrefix(urls.STATIC_PATH).Handler(
 		http.StripPrefix(urls.STATIC_PATH, http.FileServer(http.Dir("static"))))
+	// common routes
 	common.Get(urls.AUTH_CALLBACK_PATH, controllers.AuthCallbackController)
 	common.Get(urls.AUTH_PATH, controllers.AuthController)
 	common.Get(urls.LOGOUT_PATH, controllers.LogoutController)
 	common.Get(urls.NOT_FOUND_PATH, controllers.NotFound)
 	// Profile routes
 	profile := pat.New()
-	profile.Get(urls.PROFILE_PATH_VIEW, controllers.ProfileViewController)
-	profile.Get(urls.PROFILE_PATH_EDIT, controllers.ProfileEditController)
-	profile.Post(urls.PROFILE_PATH_EDIT, controllers.ProfileEditController)
+	profile.Get(urls.PROFILE_EDIT_PATH, controllers.ProfileEditController)
+	profile.Post(urls.PROFILE_EDIT_PATH, controllers.ProfileEditController)
+	profile.Get(urls.PROFILE_VIEW_PATH, controllers.ProfileViewController)
+	profile.Post(urls.PROFILE_VIEW_PATH, controllers.ProfileViewController)
+	profile.Get(urls.HOME_PATH, controllers.HomeController)
 	// bc routes
 	bc := pat.New()
-	bc.Get(urls.HOME_PATH, controllers.HomeController)
+	bc.Get(urls.PAY_SLIP, controllers.PaySlipController)
 	// applying middlewares
 	common.PathPrefix(urls.PROFILE_PATH).Handler(
 		negroni.New(

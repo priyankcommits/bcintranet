@@ -7,6 +7,7 @@ import (
 )
 
 func GetValidSession(req *http.Request) (*sessions.Session, error) {
-	sess_store := sessions.NewCookieStore([]byte("gplus"))
-	return sessions.Store.Get(sess_store, req, "gplus_gothic_session")
+	// Returns a valid authenticated user session
+	sessStore := sessions.NewCookieStore([]byte("gplus"))
+	return sessions.Store.Get(sessStore, req, "gplus_gothic_session")
 }
