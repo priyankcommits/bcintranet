@@ -32,5 +32,6 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(p)
 	// run on 3001 and using gin(repl) on 3000
-	n.Run(":3001")
+	port := os.Getenv("PORT")
+	n.Run(":" + port)
 }
