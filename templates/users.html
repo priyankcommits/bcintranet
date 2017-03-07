@@ -1,0 +1,51 @@
+{{ define "content" }}
+<div class="col s12 card">
+  <div class="col s8">
+    <h6 class="center-align blue-text"> Users </h6>
+  </div>
+  <div class="col s4">
+    <div class="search-wrapper">
+      <input type="text" id="search" placeholder="search"><i class="material-icons">search</i>
+    </div>
+  </div>
+</div>
+<table class="data-table mdl-data-table" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Role</th>
+      <th>Email</th>
+      <th>Name</th>
+      <th>View Profile</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th>Role</th>
+      <th>Email</th>
+      <th>Name</th>
+      <th>View Profile</th>
+    </tr>
+  </tfoot>
+  <tbody>
+    {{range .users}}
+    <tr>
+      <td><img class="c-avatar-list-size circle" src="data:image/jpg;base64,{{.Avatar}}"></td>
+      <td>{{if eq .Admin true}}<span class="red-text">Admin</span>{{else}}Member{{end}}</td>
+      <td>{{.Email}}</td>
+      <td>{{.FirstName}} {{.LastName}}</td>
+      <td><a href="/profile/{{.UserID}}/view/">View Profile</a></td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $('#title-text').text('{ Users }');
+});
+</script>
+{{ end }}

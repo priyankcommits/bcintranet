@@ -1,0 +1,44 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <div class="col s6">
+    <h5>Entries for <span class="blue-text">{{.requested_user.FirstName}} {{.requested_user.LastName}} </span></h5>
+    </div>
+    <div class="col s6">
+    <ul id="dropdown" class="dropdown-content">
+      {{ range .users }}
+      <li><a class="left valign c-red" href="/bc/metrics/dailylogs/{{.UserID}}/view/">{{.FirstName}} {{.LastName}}<img class="c-margin-right-10  valign c-avatar-select-size left circle" src="data:image/jpg;base64,{{.Avatar}}"></a></li>
+      {{ end }}
+    </ul>
+    </div>
+    <a class="c-margin-top-10 right btn red dropdown-button" href="#" data-activates="dropdown">View User Logs<i class="material-icons">keyboard_arrow_down</i></a>
+  </div>
+  <div class="col s12 card">
+    <ul class="collapsible popout" data-collapsible="accordion">
+      {{ range .entries }}
+      <li>
+        <div class="collapsible-header"><i class="material-icons">assignment</i>{{.Heading}} <span class="right date-to-trim">{{ .Day }} </span></div>
+        <div class="collapsible-body"><pre>{{.Description}}</pre></div>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $('#title-text').text('{ Metrics }');
+  // Open Acordion Popup
+  $('.collapsible').collapsible('open', 0);
+  // Close
+  $('.collapsible').collapsible('close', 0);
+  // TODO
+  // Trimming Date needs to be replaced by funcMap
+  $('.date-to-trim').each(function () {
+    $(this).html($(this).text().substring($(this).text(), 10));
+  });
+});
+</script>
+{{ end }}

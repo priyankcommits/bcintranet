@@ -18,6 +18,10 @@
 			"Rev": "cf955c3d1f2c27ee96f93e9738085c762ff5f49d"
 		},
 		{
+			"ImportPath": "github.com/gorilla/schema",
+			"Rev": "64644a2fced21dbfa12f7ca184bdcedeb2513dd4"
+		},
+		{
 			"ImportPath": "github.com/gorilla/securecookie",
 			"Comment": "v1.1-5-gfa5329f",
 			"Rev": "fa5329f913702981df43dcb2a380bac429c810b5"
@@ -26,6 +30,10 @@
 			"ImportPath": "github.com/gorilla/sessions",
 			"Comment": "v1.1-2-g83c8db3",
 			"Rev": "83c8db3bdc9be789e57e3756ffbcffd2d7d40176"
+		},
+		{
+			"ImportPath": "github.com/jung-kurt/gofpdf",
+			"Rev": "b572f8a6f278a31b4ff7dd03c0bb348545022f51"
 		},
 		{
 			"ImportPath": "github.com/markbates/goth",
@@ -40,29 +48,24 @@
 			"Rev": "450379d2950a65070b23cc93c53436553add4484"
 		},
 		{
+			"ImportPath": "github.com/sendgrid/rest",
+			"Comment": "v2.4.0-1-g14de1ac",
+			"Rev": "14de1ac72d9ae5c3c0d7c02164c52ebd3b951a4e"
+		},
+		{
+			"ImportPath": "github.com/sendgrid/sendgrid-go",
+			"Comment": "v3.3.1-8-g22e570e",
+			"Rev": "22e570ec3adefad019c6c8ffbead6c515ca84062"
+		},
+		{
+			"ImportPath": "github.com/sendgrid/sendgrid-go/helpers/mail",
+			"Comment": "v3.3.1-8-g22e570e",
+			"Rev": "22e570ec3adefad019c6c8ffbead6c515ca84062"
+		},
+		{
 			"ImportPath": "github.com/urfave/negroni",
 			"Comment": "v0.2.0-100-g61dbefc",
 			"Rev": "61dbefc515b4dede6eb2de7df1e54d49edce892d"
-		},
-		{
-			"ImportPath": "goji.io",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
-		},
-		{
-			"ImportPath": "goji.io/internal",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
-		},
-		{
-			"ImportPath": "goji.io/pat",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
-		},
-		{
-			"ImportPath": "goji.io/pattern",
-			"Comment": "v2.0",
-			"Rev": "0d89ff54b2c18c9c4ba530e32496aef902d3c6cd"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",

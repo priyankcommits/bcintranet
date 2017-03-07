@@ -1,0 +1,80 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text active" href="/admin/recruitment/candidate/{{.candidate.CandidateID.Hex}}/view/">View</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/admin/recruitment/candidate/{{.candidate.CandidateID.Hex}}/edit/">Edit</a></li>
+    </ul>
+  </div>
+  <div class="col s12 card">
+    <table>
+      <tr>
+        <td class="blue-text">Name</td><td>{{.candidate.Name}}</td>
+      </tr>
+      <tr>
+        <td class="blue-text">Email</td><td>{{.candidate.Email}}</td>
+      </tr>
+      <tr>
+        <td class="blue-text">Mobile</td><td>{{.candidate.Mobile}}</td>
+      </tr>
+      <tr>
+        <td class="blue-text">Agency</td><td>{{.candidate.Agency}}</td>
+      </tr>
+      <tr>
+        <td class="blue-text">Status</td><td>{{.candidate.Status}}</td>
+      </tr>
+      <tr>
+        <td class="blue-text">Last Update</td><td>{{.candidate.LastUpdateBy.FirstName}} {{.candidate.LastUpdateBy.LastName}} on <span class="date-to-trim">{{.candidate.LastUpdateOn}}</span></td>
+      </tr>
+      <tr>
+        <td class="blue-text">Profile Link</td><td><a target="_blank" href="{{.candidate.ProfileLink}}">Open</a></td>
+      </tr>
+    </table>
+  </div>
+  {{ range .candidate.Comments }}
+  <div class="col s12  grey lighten-3">
+    <div class="divider"></div>
+    <div class="section c-padding-0">
+      <div class="col s1">
+      </div>
+      <div class="col s1">
+        <a class="c-block-inline" href="/profile/{{.User.UserID}}/view/">
+          <img class="c-margin-top-20 c-avatar-select-size left circle" src="data:image/jpg;base64,{{.User.Avatar}}">
+        </a>
+      </div>
+      <div class="col s9">
+        <a class="c-block-inline" href="/profile/{{.User.UserID}}/view/"><h6 class="blue-text">{{ .User.FirstName }} {{ .User.LastName }}: &nbsp;</h6></a>
+        <p class="c-block-inline">{{.Text}}</p>
+      </div>
+      <div class="col s1 c-margin-top-20">
+      </div>
+    </div>
+  </div>
+  {{ end }}
+  <div class="col s12 card">
+    <form class="c-form" action="/admin/recruitment/candidate/comment/add/" method="post">
+      <div class="input-field col s12 c-padding-top-20">
+        <input name="CandidateID" value="{{.candidate.CandidateID.Hex}}" type="hidden">
+      </div>
+      <div class="input-field col s12">
+        <input id="text" name="Text" type="text" class="validate" required>
+        <label class="" for="text">Comment</label>
+      </div>
+      <div class="input-field col s12  c-padding-bottom-10">
+        <input class="btn red" type="submit" value="Comment" />
+      </div>
+    </form>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $('#title-text').text('{ Candidate }');
+  $('.date-to-trim').each(function () {
+    $(this).html($(this).text().substring($(this).text(), 20));
+  });
+});
+</script>
+{{ end }}

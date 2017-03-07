@@ -1,0 +1,67 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/profile/{{.user.UserID}}/view/">View Profile</a></li>
+      <li class="tab col s6"><a class="blue-text active" href="#form-div">Edit Profile</a></li>
+    </ul>
+  </div>
+  <div class="col s12 card  c-padding-top-10 c-padding-bottom-10">
+    <form class="c-form" action="" method="post">
+      <div class="col s6">
+        <div class="input-field col s12">
+          <input value="{{ if .profile.SlackName}}{{.profile.SlackName}}{{ else}}{{ end }}" id="slack" name="SlackName" type="text" class="validate" required>
+          <label class="active" for="slack">Slack Alias</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.TagLine}}{{.profile.TagLine}}{{ else}}{{ end }}" id="tagline" name="TagLine" type="text" class="validate" required>
+          <label class="active" for="tagline">Tagline</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.GitHub}}{{.profile.GitHub}}{{ else}}{{ end }}" id="github" name="GitHub" type="text" class="validate" required>
+          <label class="active" for="github">GitHub https://github.com/</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.Age}}{{.profile.Age}}{{ else}}{{ end }}" id="age" name="Age" type="text" class="validate datepicker" required>
+          <label class="active" for="age">DOB ( YYY-MM-DD )</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.Mobile}}{{.profile.Mobile}}{{ else}}{{ end }}" id="mobile" name="Mobile" type="number" class="validate" required>
+          <label class="active" for="mobile">Mobile + 91</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.BloodGroup}}{{.profile.BloodGroup}}{{ else}}{{ end }}" id="bloodgroup" name="BloodGroup" type="text" class="validate" required>
+          <label class="active" for="bloodgroup">Blood Group</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.PAN}}{{.profile.PAN}}{{ else}}{{ end }}" id="pan" name="PAN" type="text" class="validate" required>
+          <label class="active" for="pan">PAN</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="{{ if .profile.Address}}{{.profile.Address}}{{ else}}{{ end }}" id="address" name="Address" type="text" class="validate" required>
+          <label class="active" for="address">Address</label>
+        </div>
+        <div class="input-field col s12">
+          <input class="btn red darken-2" type="submit" value="Save" />
+        </div>
+      </div>
+      <div class="col s6">
+      </div>
+    </form>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Profile }");
+  $(".datepicker").pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 80, // Creates a dropdown of 15 years to control year
+    format: "yyyy-mm-dd",
+  });
+  $('#age').val($('#age').val().toString().slice(0,10))
+});
+</script>
+{{ end }}

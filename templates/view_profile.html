@@ -1,0 +1,64 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a class="blue-text active" href="#form-div">View Profile</a></li>
+      <li class="tab col s6 {{ if ne .user.UserID .profile.UserID}}disabled{{end}}"><a target="_self" class="blue-text" href="/profile/edit/">Edit Profile</a></li>
+    </ul>
+  </div>
+  <div class="col s12 card">
+  <div id="form-div" class="col s8">
+    <table>
+      <tr>
+        <td>BC Email: </td><td> {{.user.Email}} </td>
+      </tr>
+      <tr>
+        <td>Slack Alias: </td><td> {{.profile.SlackName}} </td>
+      </tr>
+      <tr>
+        <td>Tagline:</td><td> {{.profile.TagLine}}</td>
+      </tr>
+      <tr>
+        <td>GitHub:</td><td><a target="_blank" href="https://github.com/{{.profile.GitHub}}">{{.profile.GitHub}}</a><td>
+      </tr>
+      <tr>
+        <td>Mobile:</td><td> +91 {{.profile.Mobile}}</td>
+      </tr>
+      <tr>
+        <td>DOB:</td><td class="date-to-trim">{{.profile.Age}}</td>
+      </tr>
+      <tr>
+        <td>Age:</td><td id="age">{{.profile.Age}}</td>
+      </tr>
+      <tr>
+        <td>Blood Group:</td><td>{{.profile.BloodGroup}}</td>
+      </tr>
+      <tr>
+        <td>PAN:</td><td>{{.profile.PAN}}</td>
+      </tr>
+      <tr>
+        <td>Address:</td><td>{{.profile.Address}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col s4 c-padding-top-10">
+    <a href="/bc/metrics/dailylogs/{{.user.UserID}}/view/" class="btn red darken-2"> View Daily Logs</a>
+  </div>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $('#title-text').text('{ Profile }');
+  age_date = new Date($('#age').text().slice(0,10));
+  var ageDifMs = Date.now() - age_date.getTime();
+  var ageDate = new Date(ageDifMs);
+  $('#age').text(Math.abs(ageDate.getUTCFullYear() - 1970));
+  $('.date-to-trim').each(function () {
+    $(this).html($(this).text().substring($(this).text(), 10));
+  });
+});
+</script>
+{{ end }}

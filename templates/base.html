@@ -1,63 +1,104 @@
 <!DOCTYPE html>
 <head>
+  <title> { BC } </title>
   <link rel="stylesheet" href="/static/css/style.css" type="text/css">
-  <link rel="stylesheet" href="/static/css/material.min.custom.css" type="text/css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="/static/css/materialize.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/material.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/dataTables.material.min.css" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
 </head>
-<body>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title">Home</span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-                  <button id="demo-menu-lower-right"
-        class="mdl-button mdl-js-button mdl-button--icon">
-  <i class="material-icons">more_vert</i>
-</button>
-
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-    for="demo-menu-lower-right">
-    <li class="mdl-menu__item"><a class="mdl-navigation__link" href="/bc/profile"> Profile </a></li>
-    <li class="mdl-menu__item"><a class="" href="/logout"> Logout </a></li>
-</ul>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-        </nav>
-      </div>
-    </header>
-    <!-- SideBar Links -->
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">BC Intranet</span>
-      <nav class="mdl-navigation">
-
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-      </nav>
+<body class="grey lighten-2">
+  <nav>
+    <div class="nav-wrapper blue darken-1">
+      <a href="#" id="title-text" class="c-no-pointer center brand-logo">{ BC }</a>
+      <a href="/profile/home/" class="right brand-logo">{ BC }</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="#!" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
+      </ul>
     </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--10-col">
-            {{ template "content" .}}
-          </div>
-          <div class="mdl-cell mdl-cell--2-col">
-            Notifications
-          </div>
-        </div>
+  </nav>
+  <div class="">
+    <ul id="slide-out" class="side-nav">
+      <li><div class="userView">
+          <a href="/profile/{{.user.UserID}}/view/"><img class="circle" src="data:image/jpg;base64,{{.user.Avatar}}"></a>
+          <a href="#" class="c-no-pointer"><span class="blue-text name">Welcome, {{.user.FirstName}}{{ if eq .isadmin true }}(Admin){{end}}</span></a>
+          <a href="#" class="c-no-pointer"><span class="blue-text email">{{.user.Email}}</span></a>
+        </div></li>
+        <li><a href="/profile/home/" class="waves-effect waves-teal"><i class="material-icons">home</i>Home</a></li>
+        <li><a href="/profile/{{.user.UserID}}/view/" class="waves-effect waves-teal"><i class="material-icons">person</i>View Profile</a></li>
+        <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">people</i>Users</a></li>
+        <li><a href="/bc/metrics/" class="waves-effect waves-teal"><i class="material-icons">assessment</i>Metrics</a></li>
+        <li><a href="/bc/projects/" class="waves-effect waves-teal"><i class="material-icons">web_asset</i>Project Showcase</a></li>
+        <li><a href="/bc/payslip/history/" class="waves-effect waves-teal"><i class="material-icons">receipt</i>Pay Slips</a></li>
+        {{if eq .isadmin true}}
+        <li><a href="/admin/approvals/" class="waves-effect waves-teal"><i class="material-icons">vpn_key</i>Requests/Approvals</a></li>
+        <li><a href="/admin/recruitment/" class="waves-effect waves-teal"><i class="material-icons">group_add</i>Recruitment</a></li>
+        {{end}}
+        <li><a href="/bc/about/" class="waves-effect waves-teal"><i class="material-icons">info_outline</i>About</a></li>
+        <li><a href="/logout" class="waves-effect waves-red"><i class="material-icons">power_settings_new</i>Logout</a></li>
+    </ul>
+    <div class="row">
+      <div class="col s2 c-ticker-div c-div-scroll-hover">
+        {{ template "ticker" .}}
       </div>
-    </main>
+      <div class="col s8 c-content-div c-div-scroll-hover">
+        {{ template "content" .}}
+      </div>
+      <div class="col s2 c-notification-div c-div-scroll-hover">
+        {{ template "notifications" .}}
+      </div>
+    </div>
   </div>
   <!-- JavaScript Libraries -->
-  {{ template "script" }}
-  <script src="/static/js/material.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.src.js"></script>
+  <script src="/static/js/materialize.min.js"></script>
+  <script src="/static/js/jquery.dataTables.min.js"></script>
+  <script src="/static/js/dataTables.material.min.js"></script>
+  <script>
+$(document).ready(function (){
+  /* Data Tables Integration */
+  var table = $(".data-table").DataTable({
+    "bLengthChange": false,
+  });
+  $("#search").on("keyup", function () {
+    table.search($(this).val()).draw();
+  });
+
+  // displaying toast message from go
+  {{ if .message }}
+  toastMessage = "{{.message}}"
+  formattedToastMessage = toastMessage.replace("{", "").replace("}", "");
+  Materialize.toast(formattedToastMessage, 4000) // 4000 is the duration of the toast
+  {{ end }}
+
+  // Initialize collapse button
+  $(".button-collapse").sideNav();
+
+  // Updating Form fields
+  Materialize.updateTextFields();
+
+  // get url query params
+  function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return "";
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  var message = getParameterByName("m");
+  if (message != "") {
+    Materialize.toast(message, 4000);
+  }
+});
+  </script>
+  <!-- Loaging Page's partial script -->
+  {{ template "script" .}}
 </body>
 </html>

@@ -1,0 +1,90 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/bc/metrics/">DISCIPLINED OPS</a></li>
+      <li class="tab col s6"><a class="blue-text active" href="#metric-div">DAILY LOGS</a></li>
+    </ul>
+  </div>
+  <div id="metric-div" class="col s12 card">
+    <div class="col s12 c-padding-top-10">
+      <ul id="dropdown" class="dropdown-content">
+        {{ range .users }}
+        <li><a class="valign c-red" href="/bc/metrics/dailylogs/{{.UserID}}/view/">{{.FirstName}} {{.LastName}}<img class="c-margin-right-10  valign c-avatar-select-size left circle" src="data:image/jpg;base64,{{.Avatar}}"></a></li>
+         {{ end }}
+      </ul>
+      <a class="btn red dropdown-button" href="#" data-activates="dropdown">View User Logs<i class="material-icons">keyboard_arrow_down</i></a>
+      <a class="right btn-floating btn-large waves-effect waves-light red" href="/bc/metrics/dailylogs/add/"><i class="material-icons">add</i></a>
+    </div>
+    <div class="col s4">
+      <div id="container-day" style=""></div>
+    </div>
+    <div class="col s4">
+      <div id="container-month" style=""></div>
+    </div>
+    <div class="col s4">
+      <div id="container-year" style=""></div>
+    </div>
+    <div class="col s12">
+      <div id="container-bar" style=""></div>
+    </div>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Metrics }");
+  Highcharts.chart('container-bar', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Daily Log Entries'
+    },
+    xAxis: {
+      categories: [
+        'Logs',
+      ],
+      crosshair: true
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Count'
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+      '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
+      }
+    },
+    series: [{
+      name: 'Day',
+      data: [{{.daycount}}]
+
+    }, {
+      name: 'Month',
+      data: [{{.monthcount}}]
+
+    }, {
+      name: 'Year',
+      data: [{{.yearcount}}]
+
+    }
+    ]
+  });
+});
+</script>
+{{ end }}
+

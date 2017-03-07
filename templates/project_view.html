@@ -1,0 +1,82 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <div class="col s6">
+      <a href="/profile/{{.project.User.UserID}}/view/"><h5 class="blue-text"> {{ .project.User.FirstName}} {{ .project.User.LastName}} </h5></a>
+    </div>
+    <div class="col s6">
+      <a href="/profile/{{.project.User.UserID}}/view/"><img class="right circle c-avatar-list-size" src="data:image/jpg;base64,{{.project.User.Avatar}}"></a>
+    </div>
+  </div>
+  <div class="col s12 card">
+    <div class="col s6">
+    <h5> {{ .project.Title }} </h5>
+    </div>
+    <div class="col s6">
+      {{if eq .user.UserID .project.User.UserID }}
+        <a class="btn red valign right c-margin-top-10" href="/bc/project/{{.project.ProjectID.Hex}}/edit/">Edit</a>
+      {{end}}
+    </div>
+    </div>
+  <div class="col s12 card">
+    <ul class="collapsible popout" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header">About</div>
+        <div class="collapsible-body"><pre>{{.project.About}}</pre></div>
+      </li>
+      <li>
+        <div class="collapsible-header">Aim</div>
+        <div class="collapsible-body"><pre>{{.project.Aim}}</pre></div>
+      </li>
+      <li>
+        <div class="collapsible-header">Tech Stack</div>
+        <div class="collapsible-body"><pre>{{.project.TechStack}}</pre></div>
+      </li>
+      <li>
+        <div class="collapsible-header">Current Features</div>
+        <div class="collapsible-body"><pre>{{.project.CurrentFeatures}}</pre></div>
+      </li>
+      <li>
+        <div class="collapsible-header">Future Features</div>
+        <div class="collapsible-body"><pre>{{.project.FutureFeatures}}</pre></div>
+      </li>
+      <li>
+        <div class="collapsible-header">Repo Link</div>
+        <div class="collapsible-body"><a target="_blank" href="{{.project.RepoLink}}">{{.project.RepoLink}}</a></div>
+      </li>
+      <li>
+        <div class="collapsible-header">App Link</div>
+        <div class="collapsible-body"><a target="_blank" href="{{.project.HostLink}}">{{.project.HostLink}}</a></div>
+      </li>
+    </ul>
+  </div>
+  <div class="col s12 card c-padding-top-20 c-padding-bottom-10">
+    <form class="c-form" action="/bc/project/{{.project.ProjectID.Hex}}/feedback/" method="post">
+      <div class="intput-field col s6">
+        <select name="Feedback">
+          <option value="0" disabled selected>Choose Feedback</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Bug">Bug</option>
+        </select>
+        <label></label>
+      </div>
+      <div class="input-field col s12">
+        <textarea id="message" name="Message" class="materialize-textarea validate" required></textarea>
+        <label class="active" for="message">Message</label>
+      </div>
+      <div class="input-field col s12">
+        <input class="btn red darken-2" type="submit" value="Save" />
+      </div>
+    </form>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Project }");
+  $('select').material_select();
+});
+</script>
+{{ end }}

@@ -200,7 +200,7 @@ func getProviderName(req *http.Request) (string, error) {
 }
 
 func storeInSession(key string, value string, req *http.Request, res http.ResponseWriter) error {
-	session, _ := Store.Get(req, key+SessionName)
+	session, _ := Store.Get(req, key + SessionName)
 
 	session.Values[key] = value
 
@@ -208,7 +208,7 @@ func storeInSession(key string, value string, req *http.Request, res http.Respon
 }
 
 func getFromSession(key string, req *http.Request) (string, error) {
-	session, _ := Store.Get(req, key+SessionName)
+	session, _ := Store.Get(req, key + SessionName)
 
 	value := session.Values[key]
 	if value == nil {

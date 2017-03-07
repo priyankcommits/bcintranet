@@ -1,0 +1,54 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/bc/payslip/">Request</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text active" href="/bc/payslip/history/">History</a></li>
+    </ul>
+  </div>
+    <table class="data-table mdl-data-table" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Month/Year</th>
+          <th>Requested On</th>
+          <th>Status</th>
+          <th>Download</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Month/Year</th>
+          <th>Requested On</th>
+          <th>Status</th>
+          <th>Download</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        {{range .payslips}}
+        <tr>
+          <td class="date-to-trim-month">{{.Month}}</td>
+          <td class="date-to-trim">{{.RequestedOn}}</td>
+          <td>{{if eq .Status 0 }} Pending {{ end }} {{ if eq .Status 1 }} Approved {{ end }}</td>
+          <td>{{if eq .Status 0 }} Pending {{ end }} {{ if eq .Status 1 }}<a target="_blank" href="/media/{{.PayslipID.Hex}}.pdf"> Download {{ end }}</a></td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function() {
+  $("#title-text").text("{ Payslips History }");
+  // TODO
+  // Trimming Date needs to be replaced by funcMap
+  $('.date-to-trim').each(function () {
+    $(this).html($(this).text().substring($(this).text(), 10));
+  });
+  $('.date-to-trim-month').each(function () {
+    $(this).html($(this).text().substring($(this).text(), 7));
+    $(this).html($(this).text() + ' (YYYY-MM)');
+  });
+});
+</script>
+{{ end }}

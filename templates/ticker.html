@@ -1,0 +1,45 @@
+{{ define "ticker" }}
+<div>
+  <ul class="collection with-header c-margin-0">
+    <li class="collection-header"><h5 class="blue-text">Metric Ticker</h5></li>
+    {{ range .metrics }}
+    {{ if eq .Type 1 }}
+    <li class="collection-item c-padding-0 c-margin-0">
+      <a href="/bc/metrics/" class="black-text">
+        <div class="c-li-notification row c-padding-0 c-margin-0">
+          <div class="col s2 c-padding-0 c-margin-0">
+            <img class="c-avatar-li-size left circle" src="data:image/jpg;base64,{{.From.Avatar}}">
+          </div>
+          <div class="col s10 c-padding-0 c-margin-0">{{.From.FirstName}} {{.From.LastName}} added a Disciplined Ops entry</div>
+        </div>
+      </a>
+    </li>
+    {{ end }}
+    {{ if eq .Type 2 }}
+    <li class="collection-item c-padding-0 c-margin-0">
+      <a href="/bc/metrics/dailylogs/{{.ResourceID}}/view/" class="black-text">
+        <div class="c-li-notification row c-padding-0 c-margin-0">
+          <div class="col s2 c-padding-0 c-margin-0">
+            <img class="c-avatar-li-size left circle" src="data:image/jpg;base64,{{.From.Avatar}}">
+          </div>
+          <div class="col s10 c-padding-0 c-margin-0">{{.From.FirstName}} {{.From.LastName}} added a learning log entry</div>
+        </div>
+      </a>
+    </li>
+    {{ end }}
+    {{ if eq .Type 3 }}
+    <li class="collection-item c-padding-0 c-margin-0">
+      <a href="/bc/project/{{.ResourceID}}/view/" class="black-text">
+        <div class="c-li-notification row c-padding-0 c-margin-0">
+          <div class="col s2 c-padding-0 c-margin-0">
+            <img class="c-avatar-li-size left circle" src="data:image/jpg;base64,{{.From.Avatar}}">
+          </div>
+          <div class="col s10 c-padding-0 c-margin-0">{{.From.FirstName}} {{.From.LastName}} added a new Project !! </div>
+        </div>
+      </a>
+    </li>
+    {{ end }}
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

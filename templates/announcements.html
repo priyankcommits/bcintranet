@@ -1,0 +1,75 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/profile/home/">BC Wall</a></li>
+      <li class="tab col s6"><a class="blue-text active" href="#wall-div">Announcements</a></li>
+    </ul>
+  </div>
+  <a class="right btn-floating btn-large red" href="/bc/post/add/"><i class="material-icons">add</i></a>
+  {{ $user := .user }}
+  {{ range .posts }}
+  <div class="col s12 card c-padding-0  c-maring-bottom-10">
+      <div class="col s1">
+        <a class="c-block-inline" href="/profile/{{.User.UserID}}/view/">
+          <img class="c-margin-top-20 c-avatar-list-size left circle" src="data:image/jpg;base64,{{.User.Avatar}}">
+        </a>
+      </div>
+      <div class="col s10">
+        <a class="c-block-inline" href="/profile/{{.User.UserID}}/view/"><h6 class="blue-text">{{ .User.FirstName }} {{ .User.LastName }}: &nbsp;</h6></a>
+        <p class="c-block-inline"> {{.Text}}</p>
+      </div>
+      <div class="col s1 c-margin-top-20">
+        {{ if eq .User.UserID $user.UserID }}
+        <a href="/bc/post/{{.PostID.Hex}}/delete/" class=""><i class="material-icons">close</i></a>
+        {{ end }}
+      </div>
+      {{ $post := .}}
+      {{ range .Comments }}
+      <div class="col s12  grey lighten-3">
+        <div class="divider"></div>
+        <div class="section c-padding-0">
+          <div class="col s1">
+          </div>
+          <div class="col s1">
+            <a class="c-block-inline" href="/profile/{{.User.UserID}}/view/">
+              <img class="c-margin-top-20 c-avatar-select-size left circle" src="data:image/jpg;base64,{{.User.Avatar}}">
+            </a>
+          </div>
+          <div class="col s9">
+            <a class="c-block-inline" href="/profile/{{.User.UserID}}/view/"><h6 class="blue-text">{{ .User.FirstName }} {{ .User.LastName }}: &nbsp;</h6></a>
+            <p class="c-block-inline">{{.Text}}</p>
+          </div>
+          <div class="col s1 c-margin-top-20">
+            {{ if eq .User.UserID $user.UserID }}
+            <a href="/bc/post/{{$post.PostID.Hex}}/comment/{{.CommentID.Hex}}/delete/" class=""><i class="material-icons">close</i></a>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      {{ end }}
+      <form class="c-form" action="/bc/post/comment/add/" method="post">
+        <div class="input-field col s12 c-padding-top-20">
+          <input name="PostID" value="{{.PostID.Hex}}" type="hidden">
+        </div>
+        <div class="input-field col s12">
+          <input id="text" name="Text" type="text" class="validate" required>
+          <label class="" for="text">Comment</label>
+        </div>
+        <div class="input-field col s12  c-padding-bottom-10">
+          <input class="btn red" type="submit" value="Comment" />
+        </div>
+      </form>
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+  {{ define "script" }}
+  <script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $('#title-text').text('{ Home }');
+});
+  </script>
+  {{ end }}
+

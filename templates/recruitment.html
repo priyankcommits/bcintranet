@@ -1,0 +1,68 @@
+{{ define "content" }}
+<div class="col s12 card">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text active" href="/admin/recruitment/">View</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/admin/recruitment/candidate/add/">Add</a></li>
+    </ul>
+  </div>
+</div>
+<div class="col s12 card">
+  <div class="col s8">
+    <h6 class="center-align blue-text"> Candidates </h6>
+  </div>
+  <div class="col s4">
+    <div class="search-wrapper">
+      <input type="text" id="search" placeholder="search"><i class="material-icons">search</i>
+    </div>
+  </div>
+</div>
+<table class="data-table mdl-data-table" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th>Agency</th>
+      <th>Status</th>
+      <th>Candidate</th>
+      <th>Profile Link</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th>Agency</th>
+      <th>Status</th>
+      <th>Candidate</th>
+      <th>Profile Link</th>
+    </tr>
+  </tfoot>
+  <tbody>
+    {{range .candidates}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{.Email}}</td>
+      <td>{{.Mobile}}</td>
+      <td>{{.Agency}}</td>
+      <td>{{.Status}}</td>
+      <td><a href="/admin/recruitment/candidate/{{.CandidateID.Hex}}/view/">View</a></td>
+      <td><a target="_blank" href="{{.ProfileLink}}">Open</a></td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Recruitment }");
+  $(".c-ticker-div").remove();
+  $(".c-content-div").removeClass("s8").addClass("s10");
+  $(".c-content-div").attr("style","margin-left:0 !important;");
+});
+</script>
+{{ end }}

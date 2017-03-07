@@ -1,0 +1,43 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/profile/home/">BC Wall</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/bc/announcemnets/">Announcements</a></li>
+    </ul>
+  </div>
+  <div class="col s12 card c-padding-top-20 c-padding-bottom-10">
+    <div class="col s6">
+      <form class="c-form" action="" method="post">
+        <div class="input-field col s12">
+          <select name="Type">
+            <option value="1" selected><span>Post</span></option>
+            <option value="2"><span>Announcement</span></option>
+          </select>
+          <label>Type</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea id="text" name="Text" class="materialize-textarea validate" required></textarea>
+          <label class="active" for="text">Type Text</label>
+        </div>
+        <div class="input-field col s12">
+          <input class="btn red" type="submit" value="Save" />
+        </div>
+      </form>
+    </div>
+    <div class="col s6">
+    </div>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Post }");
+  // init select materialize
+  $('select').material_select();
+  $('.select-dropdown').find('span').addClass('c-red');
+});
+</script>
+{{ end }}

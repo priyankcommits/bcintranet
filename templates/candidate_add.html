@@ -1,0 +1,77 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/admin/recruitment/">View</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text active" href="/admin/recruitment/candidate/add/">Add</a></li>
+    </ul>
+  </div>
+  <div class="col s12 card  c-padding-top-20 c-padding-bottom-10">
+    <div class="col s6">
+      <form class="c-form" action="" method="post">
+        <div class="input-field col s12">
+          <input value="" id="name" name="Name" type="text" class="validate" required>
+          <label class="active" for="name">Full Name</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="" id="email" name="Email" type="text" class="validate" required>
+          <label class="active" for="email">Email</label>
+        </div>
+        <div class="input-field col s12">
+          <input value="" id="mobile" name="Mobile" type="text" class="validate" required>
+          <label class="active" for="mobile">Mobile</label>
+        </div>
+        <div class="intput-field col s12">
+          <select name="Agency">
+            <option value="0" disabled selected>Choose Agency</option>
+            <option value="Axcelovate">Axcelovate</option>
+            <option value="HumanNetwork">HumanNetwork</option>
+            <option value="RGF">RGF</option>
+            <option value="Kavana">Kavana</option>
+            <option value="Referral">Referral</option>
+            <option value="Other">Other</option>
+          </select>
+          <label></label>
+        </div>
+        <div class="input-field col s12">
+          <input value="" id="profilelink" name="ProfileLink" type="text" class="validate" required>
+          <label class="active" for="profilelink">Profile Link</label>
+        </div>
+        <div class="intput-field col s12">
+          <select name="Status">
+            <option value="0" disabled selected>Choose Status</option>
+            <option value="New">New</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Cleared Round 1">Cleared Round 1</option>
+            <option value="Cleared Round 2">Cleared Round 2</option>
+            <option value="Cleared Round 3">Cleared Round 3</option>
+            <option value="Made an Offer">Made an Offer</option>
+            <option value="Closed">Closed</option>
+          </select>
+          <label></label>
+        </div>
+        <div class="input-field col s12">
+          <input class="btn red darken-2" type="submit" value="Save" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Candidate }");
+
+  $('select').material_select();
+
+  $(".datepicker").pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 10, // Creates a dropdown of 15 years to control year
+    format: "yyyy-mm-dd",
+  });
+  $("li span").addClass("c-red");
+});
+</script>
+{{ end }}

@@ -1,2 +1,8 @@
 .DS_Store
 gin-bin
+bcintranet
+test.go
+media/*.*
+!media/.gitkeep
+secrets/.env
+!secrets/.gitkeep

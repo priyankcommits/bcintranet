@@ -1,0 +1,52 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a target="_self" class="blue-text active" href="/admin/approvals/payslips">Payslip Requests</a></li>
+    </ul>
+  </div>
+  <table class="data-table mdl-data-table" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Requestor</th>
+        <th>Requested On</th>
+        <th>Status</th>
+        <th>Approve</th>
+        <th>Approved By</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Requestor</th>
+        <th>Requested On</th>
+        <th>Status</th>
+        <th>Approve</th>
+        <th>Approved By</th>
+      </tr>
+    </tfoot>
+    <tbody>
+      {{range .payslips}}
+      <tr>
+        <td>{{.Requestor.FirstName}} {{.Requestor.LastName}}</td>
+        <td class="date-to-trim">{{.RequestedOn }}</td>
+        <td>{{if eq .Status 0 }} Pending {{ end }} {{ if eq .Status 1 }} Approved {{ end }}</td>
+        <td>{{if eq .Status 0 }} <a href="/admin/approvals/payslip/{{.PayslipID.Hex}}/">Approve</a> {{ end }} {{ if eq .Status 1 }} Approved {{ end }}</td>
+        <td>{{if eq .Status 0 }} Pending {{ end }} {{ if eq .Status 1 }} {{.Approver.FirstName}} {{.Approver.LastName}} {{ end }}</td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function () {
+  $("#title-text").text("{ Approvals }");
+  // TODO
+  // Trimming Date needs to be replaced by funcMap
+  $('.date-to-trim').each(function () {
+    $(this).html($(this).text().substring($(this).text(), 10));
+  });
+});
+</script>
+{{ end }}

@@ -1,0 +1,169 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a class="blue-text active" href="#metric-div">DISCIPLINED OPS</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/bc/metrics/dailylogs/">DAILY LOGS</a></li>
+    </ul>
+  </div>
+  <div id="metric-div" class="col s12 card">
+    {{ if eq .isadmin true }}
+    <div class="col s12">
+    <a class="right btn-floating btn-large waves-effect waves-light red" href="/admin/metrics/ops/add/"><i class="material-icons">add</i></a>
+    </div>
+    {{ end }}
+    <div class="col s4">
+      {{ if eq .daytotal 0 }}
+      <h6> Day - Not data available </h6>
+      {{else}}
+      <div id="container-day" style=""></div>
+      {{ end }}
+    </div>
+    <div class="col s4">
+      {{ if eq .monthtotal 0 }}
+      <h6> Month - Not data available </h6>
+      {{else}}
+      <div id="container-month" style=""></div>
+      {{ end }}
+    </div>
+    <div class="col s4">
+      {{ if eq .yeartotal 0 }}
+      <h6> Year - Not data available </h6>
+      {{else}}
+      <div id="container-year" style=""></div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Metrics }");
+  {{ if ne .daytotal 0 }}
+  Highcharts.chart('container-day', {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Today'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      name: 'Count',
+      colorByPoint: true,
+      data: [{
+        name: 'At In time',
+        y: parseInt({{.dayintime}}),
+      }, {
+        name: 'At Out Time',
+        y: parseInt({{.dayouttime}}),
+      }, {
+        name: 'Work from Home',
+        y: parseInt({{.daywfh}}),
+      },{
+        name: 'Out Of Office',
+        y: parseInt({{.dayooo}}),
+      },
+      ]
+    }]
+  });
+  {{ end }}
+  {{ if ne .monthtotal 0 }}
+  Highcharts.chart('container-month', {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Month'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      name: 'Count',
+      colorByPoint: true,
+      data: [{
+        name: 'At In time',
+        y: parseInt({{.monthintime}}),
+      }, {
+        name: 'At Out Time',
+        y: parseInt({{.monthouttime}}),
+      },{
+        name: 'Work from Home',
+        y: parseInt({{.monthwfh}}),
+      },{
+        name: 'Out Of Office',
+        y: parseInt({{.monthooo}}),
+      },
+      ]
+    }]
+  });
+  {{ end }}
+  {{ if ne .yeartotal 0 }}
+  Highcharts.chart('container-year', {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Year'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      name: 'Count',
+      colorByPoint: true,
+      data: [{
+        name: 'At In time',
+        y: parseInt({{.yearintime}}),
+      }, {
+        name: 'At Out Time',
+        y: parseInt({{.yearouttime}}),
+      },{
+        name: 'Work from Home',
+        y: parseInt({{.yearwfh}}),
+      },{
+        name: 'Out Of Office',
+        y: parseInt({{.yearooo}}),
+      },
+      ]
+    }]
+  });
+  {{ end }}
+});
+</script>
+{{ end }}

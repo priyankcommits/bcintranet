@@ -1,0 +1,26 @@
+{{ define "content" }}
+<div class="row">
+  <div class="col s12 card">
+    <h5 class="blue-text left"> Projects </h5>
+    <a class="right btn-floating btn-large waves-effect waves-light red" href="/bc/project/add/"><i class="material-icons">add</i></a>
+  </div>
+</div>
+<div class="row">
+  {{range .projects }}
+  <a href="/bc/project/{{.ProjectID.Hex}}/view/">
+    <div class="col s4 card c-padding-top-10 center-align c-project-tile">
+      <img class="circle c-avatar-list-size" src="data:image/jpg;base64,{{.User.Avatar}}">
+      <h5 class="blue-text"> {{.Title}} </h5>
+    </div>
+  </a>
+  {{ end }}
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+$(document).ready(function (){
+  // setting nav bar heading
+  $("#title-text").text("{ Projects }");
+});
+</script>
+{{ end }}
