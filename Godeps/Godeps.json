@@ -2,9 +2,6 @@
 	"ImportPath": "bcintranet",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v79",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/gorilla/context",
