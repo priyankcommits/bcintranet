@@ -15,12 +15,12 @@ func GothLoginMiddleware(res http.ResponseWriter, req *http.Request, next http.H
 	// Retreiving session, redirecting if no session found
 	session, _ := utils.GetValidSession(req)
 	if session.Values["gplus"] == nil {
-		http.Redirect(res, req, urls.ROOT_PATH, http.StatusTemporaryRedirect)
+		http.Redirect(res, req, urls.ROOT_PATH, http.StatusSeeOther)
 	}
 	if session.Values["userid"] != "" {
 		context.Set(req, "userid", session.Values["userid"])
 	} else {
-		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusTemporaryRedirect)
+		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusSeeOther)
 	}
 	next(res, req)
 }
@@ -31,13 +31,13 @@ func SetUserMiddleware(res http.ResponseWriter, req *http.Request, next http.Han
 	if session.Values["userid"] != "" {
 		context.Set(req, "userid", session.Values["userid"])
 	} else {
-		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusTemporaryRedirect)
+		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusSeeOther)
 	}
-	err := store.GetProfile(session.Values["userid"].(string))
+	_, err := store.GetProfile(session.Values["userid"].(string))
 	if err != nil {
-		http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusTemporaryRedirect)
+		http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusSeeOther)
 	} else {
-		http.Redirect(res, req, urls.HOME_PATH, http.StatusTemporaryRedirect)
+		http.Redirect(res, req, urls.HOME_PATH, http.StatusSeeOther)
 	}
 	next(res, req)
 }

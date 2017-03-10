@@ -14,6 +14,17 @@ import (
 	"github.com/gorilla/schema"
 )
 
+func HomeController(res http.ResponseWriter, req *http.Request) {
+	// Home/wall controller
+	_, err := store.GetProfile(context.Get(req, "userid").(string))
+	if err != nil {
+		http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusSeeOther)
+	} else {
+		t, _ := template.ParseFiles(templates.BASE, templates.HOME, templates.NOTIFICATIONS, templates.TICKER)
+		t.Execute(res, nil)
+	}
+}
+
 func ProfileViewController(res http.ResponseWriter, req *http.Request) {
 	// Profile View Controller
 	if req.Method == "GET" {
@@ -41,7 +52,7 @@ func ProfileEditController(res http.ResponseWriter, req *http.Request) {
 			t.Execute(res, data)
 		} else {
 			profile.UserID = context.Get(req, "userid").(string)
-			err = store.CreateProfile(profile)
+			err = store.SaveProfile(profile)
 			if err != nil {
 				data["message"] = models.Message{Value: "Something went wrong, try again"}
 				t.Execute(res, data)

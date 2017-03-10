@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	// "log"
 	"net/http"
+	"strings"
 	"text/template"
 
 	"bcintranet/store"
@@ -10,17 +10,26 @@ import (
 	"bcintranet/urls"
 	"bcintranet/utils"
 
+	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 )
 
 func LoginController(res http.ResponseWriter, req *http.Request) {
-	t, _ := template.ParseFiles(templates.LOGIN)
-	t.Execute(res, nil)
+	// login page controller
+	session, _ := utils.GetValidSession(req)
+	if session.Values["userid"] != nil {
+		context.Set(req, "userid", session.Values["userid"])
+		http.Redirect(res, req, urls.HOME_PATH, http.StatusSeeOther)
+	} else {
+		t, _ := template.ParseFiles(templates.LOGIN)
+		t.Execute(res, nil)
+	}
 }
 
 func LogoutController(res http.ResponseWriter, req *http.Request) {
+	// delete the cookie and redirect
 	session, _ := utils.GetValidSession(req)
 	session.Options = &sessions.Options{Path: urls.ROOT_PATH, MaxAge: -1}
 	session.Save(req, res)
@@ -28,24 +37,34 @@ func LogoutController(res http.ResponseWriter, req *http.Request) {
 }
 
 func AuthController(res http.ResponseWriter, req *http.Request) {
+	// start authentication process using gothic
 	gothic.BeginAuthHandler(res, req)
 }
 
 func AuthCallbackController(res http.ResponseWriter, req *http.Request) {
+	// goth callback controller to complete user auth and create user
 	var gothUser goth.User
 	gothUser, err := gothic.CompleteUserAuth(res, req)
 	if err != nil {
 		gothic.BeginAuthHandler(res, req)
+	}
+	emailDomain := strings.Join(strings.Split(gothUser.Email, "@")[1:], "a")
+	if emailDomain != "gmail.com" {
+		session, _ := utils.GetValidSession(req)
+		session.Options = &sessions.Options{Path: urls.ROOT_PATH, MaxAge: -1}
+		session.Save(req, res)
+		queryParam := "?m=account_invalid"
+		http.Redirect(res, req, urls.ROOT_PATH+queryParam, http.StatusSeeOther)
 	}
 	session, _ := utils.GetValidSession(req)
 	session.Values["userid"] = gothUser.UserID
 	session.Save(req, res)
 	_, err = store.GetUser(gothUser.UserID)
 	if err != nil {
-		store.CreateUserData(
+		store.SaveUser(
 			gothUser.UserID, gothUser.FirstName, gothUser.LastName,
-			gothUser.Email, gothUser.AccessToken,
+			gothUser.Email, gothUser.AccessToken, gothUser.AvatarURL,
 		)
 	}
-	http.Redirect(res, req, urls.HOME_PATH, http.StatusTemporaryRedirect)
+	http.Redirect(res, req, urls.HOME_PATH, http.StatusSeeOther)
 }

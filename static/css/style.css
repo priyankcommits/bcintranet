@@ -2,7 +2,6 @@
 .login-bg {
     background-image: url("../images/matrix.jpg");
     background-color: #cccccc;
-    background-size: 100% 100%;
 }
 span.mdl-layout-title {
   background-color: #2196F3;
@@ -10,9 +9,3 @@ span.mdl-layout-title {
 }
 
 /* Common */
-.black-text {
-  color: #000 !important;
-}
-.white-text {
-  color: #FFF !important;
-}

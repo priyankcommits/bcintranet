@@ -45,23 +45,36 @@ func GetUser(userId string) (models.User, error) {
 	return user, err
 }
 
-func CreateUserData(userId string, firstName string, lastName string, email string, accessToken string) error {
-	// Create user data on auth callback
+func SaveUser(userId string, firstName string, lastName string, email string, accessToken string, avatar string) error {
+	// Create user data
 	session := GetSession("User", "UserID")
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("User")
-	var user models.User
-	user.UserID = userId
-	user.FirstName = firstName
-	user.LastName = lastName
-	user.Email = email
-	user.AccessToken = accessToken
-	err := c.Insert(user)
+	_, err := GetUser(userId)
+	if err == nil {
+		err = c.Update(
+			bson.M{"userid": userId},
+			bson.M{"$set": bson.M{
+				"userid": userId, "firstname": firstName,
+				"lastname": lastName, "email": email,
+				"accesstoken": accessToken, "avatar": avatar,
+			}},
+		)
+	} else {
+		var user models.User
+		user.UserID = userId
+		user.FirstName = firstName
+		user.LastName = lastName
+		user.Email = email
+		user.AccessToken = accessToken
+		user.Avatar = avatar
+		err = c.Insert(user)
+	}
 	return err
 }
 
-func GetProfile(userId string) error {
+func GetProfile(userId string) (models.Profile, error) {
 	// Find profile
 	session := GetSession("Profile", "UserID")
 	session = session.Copy()
@@ -69,14 +82,23 @@ func GetProfile(userId string) error {
 	c := session.DB("bcintranet").C("Profile")
 	var profile models.Profile
 	err := c.Find(bson.M{"userid": userId}).One(&profile)
-	return err
+	return profile, err
 }
 
-func CreateProfile(profile *models.Profile) error {
+func SaveProfile(profile *models.Profile) error {
+	// create user profile
 	session := GetSession("Profile", "UserID")
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("Profile")
-	err := c.Insert(&profile)
+	_, err := GetProfile(profile.UserID)
+	if err == nil {
+		err = c.Update(
+			bson.M{"userid": profile.UserID},
+			bson.M{"$set": &profile},
+		)
+	} else {
+		err = c.Insert(&profile)
+	}
 	return err
 }

@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="/static/css/style.css" type="text/css">
-  <link rel="stylesheet" href="/static/css/material.min.custom.css" type="text/css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="/static/css/materialize.min.css" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+  <meta name="google-signin-client_id" content="262208964639-fdkpa404rd5ba7tg0lq0dh7v1viq4sj9.apps.googleusercontent.com">
 </head>
 <body class="login-bg">
-  <div class="mdl-layout">
-    <main class="mdl-layout__content">
-      <div class="white-text mdl-typography--text-center page-content">
-        <h1 class="white-text"> { BC Intranet }</h1>
-        <div class="mdl-grid" style="margin-top:200px;">
-          <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="/auth/gplus">
-              Login
-            </a>
-          </div>
-        </div>
-      </div>
-    </main>
+  <h1 class="center-align"> <span class="white-text">{ BC Intranet }</span></h1>
+  <div class="" style="margin-top:200px;">
+    <div class="center-align">
+      <a id="google-signin" class="center-align red draken-3 btn waves-light" href="/auth/gplus">
+        Login
+      </a>
+    </div>
   </div>
   <!-- JavaScript Libraries -->
-  <script src="/static/js/material.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="/static/js/materialize.min.js"></script>
+  <script>
+$(document).ready(function (){
+  {{ if .message }}
+  Materialize.toast('I am a toast!', 4000) // 4000 is the duration of the toast
+  {{ end }}
+  // get url query params
+  function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+  var message = getParameterByName('m');
+  if (message != '') {
+    Materialize.toast(message);
+  }
+});
+  </script>
 </body>
 </html>

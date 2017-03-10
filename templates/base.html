@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="/static/css/style.css" type="text/css">
-  <link rel="stylesheet" href="/static/css/material.min.custom.css" type="text/css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="/static/css/materialize.min.css" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 </head>
 <body>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title">Home</span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <button id="demo-menu-lower-right"
-            class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">more_vert</i>
-          </button>
-          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-            for="demo-menu-lower-right">
-            <li class="mdl-menu__item"><a class="mdl-navigation__link black-text" href="/bc/profile"> Profile </a></li>
-            <li class="mdl-menu__item"><a class="mdl-navigation__link black-text" href="/logout"> Logout </a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    <!-- SideBar Links -->
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">BC Intranet</span>
-      <nav class="mdl-navigation">
-
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-      </nav>
+  <nav>
+    <div class="nav-wrapper blue darken-2">
+      <a href="#" class="brand-logo"> {BC}</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">...</a></li>
+      </ul>
     </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--10-col">
-            {{ template "content" .}}
+  </nav>
+  <div class="container">
+    <ul id="slide-out" class="side-nav">
+      <li><div class="userView">
+          <div class="background">
+            <img src="images/office.jpg">
           </div>
-          <div class="mdl-cell mdl-cell--2-col">
-            Notifications
-          </div>
-          <div class="mdl-cell mdl-cell--12-col">
-            <div id="toast-message" class="mdl-js-snackbar mdl-snackbar">
-              <div class="mdl-snackbar__text"></div>
-              <button class="mdl-snackbar__action" type="button"></button>
-            </div>
-          </div>
-        </div>
+          <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+          <a href="#!name"><span class="white-text name">John Doe</span></a>
+          <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+        </div></li>
+        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Subheader</a></li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    </ul>
+    <div class="row">
+      <div class="col s2">
+        {{ template "ticker" }}
       </div>
-    </main>
+      <div class="col s8">
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        {{ template "content" .}}
+      </div>
+      <div class="col s2">
+        {{ template "notifications" }}
+      </div>
+    </div>
   </div>
   <!-- JavaScript Libraries -->
   {{ template "script" }}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="/static/js/material.min.js"></script>
+  <script src="/static/js/materialize.min.js"></script>
   <script>
-    $(window).load(function () {
-      {{ if .notification }}
-      var notification = document.querySelector('#toast-message');
-      notification.MaterialSnackbar.showSnackbar(
-        {
-          message: '{{.message}}'
-        }
-      );
-      {{end}}
-    });
+$(document).ready(function (){
+  {{ if .message }}
+  Materialize.toast('I am a toast!', 4000) // 4000 is the duration of the toast
+  {{ end }}
+  // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+  // get url query params
+  function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+  var message = getParameterByName('m');
+  if (message != '') {
+    Materialize.toast(message);
+  }
+});
   </script>
 </body>
 </html>

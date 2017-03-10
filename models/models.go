@@ -1,7 +1,5 @@
 package models
 
-import ()
-
 type (
 	// User type represents the registered user.
 	User struct {
@@ -10,6 +8,7 @@ type (
 		LastName    string `json:"lastname"`
 		Email       string `json:"email"`
 		AccessToken string `json:"token,omitempty"`
+		Avatar      string `json:"avatar"`
 	}
 	// Profile type represents the personal data of a user.
 	Profile struct {
