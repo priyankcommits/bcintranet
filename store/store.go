@@ -3,13 +3,13 @@ package store
 import (
 	"bcintranet/helpers"
 	"bcintranet/models"
-	"log"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 func GetSession(collection string, pk string) *mgo.Session {
+	// Dial to database and Return mgo session
 	session, err := mgo.Dial("localhost")
 	if err != nil {
 		panic(err)
@@ -20,6 +20,7 @@ func GetSession(collection string, pk string) *mgo.Session {
 }
 
 func ensureIndex(collection string, pk string, s *mgo.Session) {
+	// Ensure an index on the collection, why?
 	session := s.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C(collection)
@@ -53,27 +54,28 @@ func SaveUser(userId string, firstName string, lastName string, email string, ac
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("User")
-	_, err := GetUser(userId)
-	if err == nil {
-		err = c.Update(
-			bson.M{"userid": userId},
-			bson.M{"$set": bson.M{
-				"userid": userId, "firstname": firstName,
-				"lastname": lastName, "email": email,
-				"accesstoken": accessToken, "avatar": helpers.ImageToBase64(avatar),
-			}},
-		)
-	} else {
-		var user models.User
-		user.UserID = userId
-		user.FirstName = firstName
-		user.LastName = lastName
-		user.Email = email
-		user.AccessToken = accessToken
-		user.Avatar = helpers.ImageToBase64(avatar)
-		err = c.Insert(user)
+	user, err := GetUser(userId)
+	if err != nil {
+		if user.UserID != "" {
+			err = c.Update(
+				bson.M{"userid": userId},
+				bson.M{"$set": bson.M{
+					"userid": userId, "firstname": firstName,
+					"lastname": lastName, "email": email,
+					"accesstoken": accessToken, "avatar": helpers.ImageToBase64(avatar),
+				}},
+			)
+		} else {
+			var user models.User
+			user.UserID = userId
+			user.FirstName = firstName
+			user.LastName = lastName
+			user.Email = email
+			user.AccessToken = accessToken
+			user.Avatar = helpers.ImageToBase64(avatar)
+			err = c.Insert(user)
+		}
 	}
-	log.Println(helpers.ImageToBase64(avatar))
 	return err
 }
 
@@ -94,14 +96,16 @@ func SaveProfile(profile *models.Profile) error {
 	session = session.Copy()
 	defer session.Close()
 	c := session.DB("bcintranet").C("Profile")
-	_, err := GetProfile(profile.UserID)
-	if err == nil {
-		err = c.Update(
-			bson.M{"userid": profile.UserID},
-			bson.M{"$set": &profile},
-		)
-	} else {
-		err = c.Insert(&profile)
+	userProfile, err := GetProfile(profile.UserID)
+	if err != nil {
+		if userProfile.UserID != "" {
+			err = c.Update(
+				bson.M{"userid": profile.UserID},
+				bson.M{"$set": &profile},
+			)
+		} else {
+			err = c.Insert(&profile)
+		}
 	}
 	return err
 }

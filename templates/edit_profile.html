@@ -7,31 +7,31 @@
     <form action="" method="post">
       <div class="col s6">
         <div class="input-field col s12">
-          <input value="" id="slack" name="SlackName" type="text" class="validate">
+          <input value="" id="slack" name="SlackName" type="text" class="validate" required>
           <label class="active" for="slack">Slack Name</label>
         </div>
         <div class="input-field col s12">
-          <input value="" id="tagline" name="Tagline" type="text" class="validate">
+          <input value="" id="tagline" name="Tagline" type="text" class="validate" required>
           <label class="active" for="tagline">Tagline</label>
         </div>
         <div class="input-field col s12">
-          <input value="" id="github" name="GitHub" type="text" class="validate">
+          <input value="" id="github" name="GitHub" type="text" class="validate" required>
           <label class="active" for="github">GitHub Name</label>
         </div>
         <div class="input-field col s12">
-          <input value="" id="age" name="Age" type="number" class="validate">
+          <input value="" id="age" name="Age" type="number" class="validate" required>
           <label class="active" for="age">Age</label>
         </div>
         <div class="input-field col s12">
-          <input value="" id="mobile" name="Mobile" type="number" class="validate">
+          <input value="" id="mobile" name="Mobile" type="number" class="validate" required>
           <label class="active" for="mobile">Mobile</label>
         </div>
         <div class="input-field col s12">
-          <input value="" id="bloodgroup" name="BloodGroup" type="text" class="validate">
+          <input value="" id="bloodgroup" name="BloodGroup" type="text" class="validate" required>
           <label class="active" for="bloodgroup">Blood Group</label>
         </div>
         <div class="input-field col s12">
-          <input value="" id="address" name="Address" type="text" class="validate">
+          <input value="" id="address" name="Address" type="text" class="validate" required>
           <label class="active" for="address">Address</label>
         </div>
         <div class="input-field col s12">
@@ -45,4 +45,9 @@
 </div>
 {{ end }}
 {{ define "script" }}
+<script>
+$(document).ready(function (){
+  $('#title-text').text('{ Profile }');
+});
+</script>
 {{ end }}

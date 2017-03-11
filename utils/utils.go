@@ -21,11 +21,10 @@ func CustomTemplateExecute(res http.ResponseWriter, req *http.Request, templateN
 	// Append common templates and data structs and execute template
 	t, _ := template.ParseFiles(templates.BASE, templates.NOTIFICATIONS, templates.TICKER, templateName)
 	if len(data) == 0 {
-		data := make(map[string]interface{})
+		data = make(map[string]interface{})
 		data["user"], _ = store.GetUser(context.Get(req, "userid").(string))
-		t.Execute(res, data)
 	} else {
 		data["user"], _ = store.GetUser(context.Get(req, "userid").(string))
-		t.Execute(res, data)
 	}
+	t.Execute(res, data)
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"bcintranet/models"
@@ -28,7 +29,7 @@ func HomeController(res http.ResponseWriter, req *http.Request) {
 func ProfileViewController(res http.ResponseWriter, req *http.Request) {
 	// Profile View Controller
 	data := make(map[string]interface{})
-	controllerTemplate := templates.PROFILE
+	controllerTemplate := templates.PROFILE_VIEW
 	if req.Method == "GET" {
 		utils.CustomTemplateExecute(res, req, controllerTemplate, data)
 	}
@@ -39,11 +40,12 @@ func ProfileViewController(res http.ResponseWriter, req *http.Request) {
 func ProfileEditController(res http.ResponseWriter, req *http.Request) {
 	// Profile Edit Controller
 	data := make(map[string]interface{})
-	controllerTemplate := templates.PROFILE
+	controllerTemplate := templates.PROFILE_EDIT
 	if req.Method == "GET" {
 		utils.CustomTemplateExecute(res, req, controllerTemplate, nil)
 	}
 	if req.Method == "POST" {
+		log.Println("hot ppost")
 		err := req.ParseForm()
 		profile := new(models.Profile)
 		decoder := schema.NewDecoder()
