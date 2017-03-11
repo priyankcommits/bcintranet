@@ -59,12 +59,9 @@ func AuthCallbackController(res http.ResponseWriter, req *http.Request) {
 	session, _ := utils.GetValidSession(req)
 	session.Values["userid"] = gothUser.UserID
 	session.Save(req, res)
-	_, err = store.GetUser(gothUser.UserID)
-	if err != nil {
-		store.SaveUser(
-			gothUser.UserID, gothUser.FirstName, gothUser.LastName,
-			gothUser.Email, gothUser.AccessToken, gothUser.AvatarURL,
-		)
-	}
+	store.SaveUser(
+		gothUser.UserID, gothUser.FirstName, gothUser.LastName,
+		gothUser.Email, gothUser.AccessToken, gothUser.AvatarURL,
+	)
 	http.Redirect(res, req, urls.HOME_PATH, http.StatusSeeOther)
 }

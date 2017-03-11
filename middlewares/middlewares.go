@@ -16,7 +16,7 @@ func GothLoginMiddleware(res http.ResponseWriter, req *http.Request, next http.H
 	if session.Values["gplus"] == nil {
 		http.Redirect(res, req, urls.ROOT_PATH, http.StatusSeeOther)
 	}
-	if session.Values["userid"] != "" {
+	if session.Values["userid"] != nil {
 		context.Set(req, "userid", session.Values["userid"])
 	} else {
 		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusSeeOther)
