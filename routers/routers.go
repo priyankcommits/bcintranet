@@ -30,9 +30,11 @@ func GetRouter() *pat.Router {
 	profile.Get(urls.PROFILE_VIEW_PATH, controllers.ProfileViewController)
 	profile.Post(urls.PROFILE_VIEW_PATH, controllers.ProfileViewController)
 	profile.Get(urls.HOME_PATH, controllers.HomeController)
+	profile.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
 	// bc routes
 	bc := pat.New()
 	bc.Get(urls.PAY_SLIP, controllers.PaySlipController)
+	bc.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
 	// applying middlewares
 	common.PathPrefix(urls.PROFILE_PATH).Handler(
 		negroni.New(
@@ -50,6 +52,7 @@ func GetRouter() *pat.Router {
 			negroni.Wrap(bc),
 		),
 	)
+	common.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
 	common.Get(urls.ROOT_PATH, controllers.LoginController)
 	return common
 }

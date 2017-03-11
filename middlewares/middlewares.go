@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	// "log"
 	"net/http"
 
 	"bcintranet/store"

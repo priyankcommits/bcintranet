@@ -1,11 +1,70 @@
-/* Login Page */
-.login-bg {
-    background-image: url("../images/matrix.jpg");
-    background-color: #cccccc;
+/* BODY*/
+* {
+    margin     : 0;
+    padding    : 0;
 }
-span.mdl-layout-title {
-  background-color: #2196F3;
-  color: #FFF;
+html {
+    height: 100%;
+    width : 100%;
+}
+body {
+    height     : 100%;
+    width      : 100%;
+    overflow-y: hidden;
+}
+
+/* Scroll Bar Show */
+.c-div-scroll-hover {
+  overflow-y: hidden !important;
+}
+.c-div-scroll-hover:hover {
+  overflow-y: auto !important;
+}
+
+/* Login Page */
+.c-login-bg {
+    background-image: url("../images/matrix.jpg") !important;
+    background-color: #cccccc !important;
+}
+
+/* Nav Bar*/
+.nav-wrapper ul li a {
+  display: block !important;
+}
+
+/* Main Layout */
+.c-ticker-div {
+  background-color: #FFF !important;
+  top: 64px !important;
+  bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: fixed !important;
+}
+
+.c-content-div {
+  margin-left: 16.667% !important;
+  margin-right: 16.667% !important;
+  top: 64px !important;
+  bottom: 0 !important;
+  position: fixed !important;
+}
+
+.c-notification-div {
+  background-color: #FFF !important;
+  top: 64px !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: fixed !important;
 }
 
 /* Common */
+.c-padding-bottom-10 {
+  padding-bottom: 10px !important;
+}
+
+.c-no-pointer {
+  cursor: text !important;
+}

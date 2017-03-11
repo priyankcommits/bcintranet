@@ -2,13 +2,12 @@ package controllers
 
 import (
 	"net/http"
-	"text/template"
 
 	"bcintranet/templates"
+	"bcintranet/utils"
 )
 
 func NotFound(res http.ResponseWriter, req *http.Request) {
 	// 404 controller
-	t, _ := template.ParseFiles(templates.BASE, templates.NOTFOUND)
-	t.Execute(res, nil)
+	utils.CustomTemplateExecute(res, req, templates.NOTFOUND, nil)
 }

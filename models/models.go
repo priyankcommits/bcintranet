@@ -19,6 +19,7 @@ type (
 		Address    string `json:"address"`
 		TagLine    string `json:"tagline"`
 		GitHub     string `json:"github"`
+		SlackName  string `json:"slackname"`
 	}
 	// Flash message Struct
 	Message struct {

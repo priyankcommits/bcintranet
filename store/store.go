@@ -1,7 +1,9 @@
 package store
 
 import (
+	"bcintranet/helpers"
 	"bcintranet/models"
+	"log"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -58,7 +60,7 @@ func SaveUser(userId string, firstName string, lastName string, email string, ac
 			bson.M{"$set": bson.M{
 				"userid": userId, "firstname": firstName,
 				"lastname": lastName, "email": email,
-				"accesstoken": accessToken, "avatar": avatar,
+				"accesstoken": accessToken, "avatar": helpers.ImageToBase64(avatar),
 			}},
 		)
 	} else {
@@ -68,9 +70,10 @@ func SaveUser(userId string, firstName string, lastName string, email string, ac
 		user.LastName = lastName
 		user.Email = email
 		user.AccessToken = accessToken
-		user.Avatar = avatar
+		user.Avatar = helpers.ImageToBase64(avatar)
 		err = c.Insert(user)
 	}
+	log.Println(helpers.ImageToBase64(avatar))
 	return err
 }
 

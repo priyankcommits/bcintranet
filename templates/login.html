@@ -3,10 +3,10 @@
   <link rel="stylesheet" href="/static/css/style.css" type="text/css">
   <link rel="stylesheet" href="/static/css/materialize.min.css" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
   <meta name="google-signin-client_id" content="262208964639-fdkpa404rd5ba7tg0lq0dh7v1viq4sj9.apps.googleusercontent.com">
 </head>
-<body class="login-bg">
+<body class="c-login-bg">
   <h1 class="center-align"> <span class="white-text">{ BC Intranet }</span></h1>
   <div class="" style="margin-top:200px;">
     <div class="center-align">
@@ -21,9 +21,13 @@
   <script src="/static/js/materialize.min.js"></script>
   <script>
 $(document).ready(function (){
+  // displaying toast message from go
   {{ if .message }}
-  Materialize.toast('I am a toast!', 4000) // 4000 is the duration of the toast
+  toastMessage = "{{.message}}"
+  formattedToastMessage = toastMessage.replace('{', '').replace('}', '');
+  Materialize.toast(formattedToastMessage, 4000) // 4000 is the duration of the toast
   {{ end }}
+
   // get url query params
   function getParameterByName(name, url) {
     if (!url) {
@@ -36,6 +40,7 @@ $(document).ready(function (){
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
+
   var message = getParameterByName('m');
   if (message != '') {
     Materialize.toast(message);
