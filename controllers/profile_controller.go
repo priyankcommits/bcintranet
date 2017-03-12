@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"bcintranet/models"
@@ -31,9 +30,18 @@ func ProfileViewController(res http.ResponseWriter, req *http.Request) {
 	data := make(map[string]interface{})
 	controllerTemplate := templates.PROFILE_VIEW
 	if req.Method == "GET" {
-		utils.CustomTemplateExecute(res, req, controllerTemplate, data)
-	}
-	if req.Method == "POST" {
+		profile, err := store.GetProfile(context.Get(req, "userid").(string))
+		if err != nil {
+			http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusSeeOther)
+		} else {
+			profile, err = store.GetProfile(req.URL.Query().Get(":userid"))
+			if err != nil {
+				http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusSeeOther)
+			} else {
+				data["profile"] = profile
+				utils.CustomTemplateExecute(res, req, controllerTemplate, data)
+			}
+		}
 	}
 }
 
@@ -42,10 +50,15 @@ func ProfileEditController(res http.ResponseWriter, req *http.Request) {
 	data := make(map[string]interface{})
 	controllerTemplate := templates.PROFILE_EDIT
 	if req.Method == "GET" {
-		utils.CustomTemplateExecute(res, req, controllerTemplate, nil)
+		profile, err := store.GetProfile(context.Get(req, "userid").(string))
+		if err != nil {
+			utils.CustomTemplateExecute(res, req, controllerTemplate, nil)
+		} else {
+			data["profile"] = profile
+			utils.CustomTemplateExecute(res, req, controllerTemplate, data)
+		}
 	}
 	if req.Method == "POST" {
-		log.Println("hot ppost")
 		err := req.ParseForm()
 		profile := new(models.Profile)
 		decoder := schema.NewDecoder()

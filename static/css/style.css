@@ -21,6 +21,11 @@ body {
   overflow-y: auto !important;
 }
 
+/* Materialize Tabs*/
+ul.tabs {
+  overflow: hidden;
+}
+
 /* Login Page */
 .c-login-bg {
     background-image: url("../images/matrix.jpg") !important;
@@ -65,6 +70,17 @@ body {
   padding-bottom: 10px !important;
 }
 
+.c-padding-top-10 {
+  padding-top: 10px !important;
+}
+
 .c-no-pointer {
   cursor: text !important;
+}
+.c-form {
+  padding-top 10px  !important;
+  padding-bottom: 10px !important;
+}
+.c-form .input-field {
+  margin-top: 0 !important;
 }

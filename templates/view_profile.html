@@ -1,10 +1,50 @@
 {{ define "content" }}
-in view profile
+<div class="row">
+  <div class="col s12 card">
+    <ul class="tabs">
+      <li class="tab col s6"><a class="blue-text active" href="#form-div">View Profile</a></li>
+      <li class="tab col s6"><a target="_self" class="blue-text" href="/profile/edit/">Edit Profile</a></li>
+    </ul>
+  </div>
+  <div class="col s12 card">
+  <div id="form-div" class="col s8">
+    <table>
+      <tr>
+        <td>BC Email: </td><td> {{.user.Email}} </td>
+      </tr>
+      <tr>
+        <td>Slack Alias: </td><td> {{.profile.SlackName}} </td>
+      </tr>
+      <tr>
+        <td>Tagline:</td><td> {{.profile.TagLine}}</td>
+      </tr>
+      <tr>
+        <td>GitHub:</td><td><a target="_blank" href="https://github.com/{{.profile.GitHub}}">{{.profile.GitHub}}</a><td>
+      </tr>
+      <tr>
+        <td>Age:</td><td>{{.profile.Age}}</td>
+      </tr>
+      <tr>
+        <td>Blood Group:</td><td>{{.profile.BloodGroup}}</td>
+      </tr>
+      <tr>
+        <td>Address:</td><td>{{.profile.Address}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col s4 c-padding-top-10">
+    <a href="/bc/metrics/" class="btn red darken-2"> View Metric Logs</a>
+  </div>
+  </div>
+</div>
 {{ end }}
 {{ define "script" }}
 <script>
 $(document).ready(function (){
+  // setting nav bar heading
   $('#title-text').text('{ Profile }');
+  // initializing materialize tabs
+  $('ul.tabs').tabs();
 });
 </script>
 {{ end }}

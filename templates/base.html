@@ -19,15 +19,16 @@
   <div class="">
     <ul id="slide-out" class="side-nav">
       <li><div class="userView">
-          <a href="#!user"><img class="circle" src="data:image/jpg;base64,{{.user.Avatar}}"></a>
-          <a href="#!name"><span class="black-text name">{{.user.FirstName}}</span></a>
-          <a href="#!email"><span class="black-text email">{{.user.Email}}</span></a>
+          <a href="#" class="c-no-pointer"><img class="circle" src="data:image/jpg;base64,{{.user.Avatar}}"></a>
+          <a href="#" class="c-no-pointer"><span class="blue-text name">Welcome, {{.user.FirstName}}</span></a>
+          <a href="#" class="c-no-pointer"><span class="blue-text email">{{.user.Email}}</span></a>
         </div></li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+        <li><a href="/profile/view/{{.user.UserID}}/" class="waves-effect waves-teal"><i class="material-icons">perm_identity</i>View Profile</a></li>
+                <li><a href="#" class="waves-effect waves-teal"><i class="material-icons">recent_actors</i>Users</a></li>
+        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">group_work</i>Metrics</a></li>
+        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">receipt</i>Pay Slips</a></li>
+        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">info_outline</i>About</a></li>
+        <li><a href="/logout" class="waves-effect waves-red"><i class="material-icons">power_settings_new</i>Logout</a></li>
     </ul>
     <div class="row">
       <div class="col s2 c-ticker-div c-div-scroll-hover">
