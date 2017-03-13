@@ -49,7 +49,7 @@ func AuthCallbackController(res http.ResponseWriter, req *http.Request) {
 		gothic.BeginAuthHandler(res, req)
 	}
 	emailDomain := strings.Join(strings.Split(gothUser.Email, "@")[1:], "a")
-	if emailDomain != "gmail.com" {
+	if emailDomain == "" {
 		session, _ := utils.GetValidSession(req)
 		session.Options = &sessions.Options{Path: urls.ROOT_PATH, MaxAge: -1}
 		session.Save(req, res)

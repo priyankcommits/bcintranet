@@ -27,7 +27,7 @@ func GothLoginMiddleware(res http.ResponseWriter, req *http.Request, next http.H
 func SetUserMiddleware(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	// Appending the user id to every request and redirecting accordinly if no profile found
 	session, _ := utils.GetValidSession(req)
-	if session.Values["userid"] != "" {
+	if session.Values["userid"] != nil {
 		context.Set(req, "userid", session.Values["userid"])
 	} else {
 		http.Redirect(res, req, urls.LOGOUT_PATH, http.StatusSeeOther)
@@ -35,8 +35,6 @@ func SetUserMiddleware(res http.ResponseWriter, req *http.Request, next http.Han
 	_, err := store.GetProfile(session.Values["userid"].(string))
 	if err != nil {
 		http.Redirect(res, req, urls.PROFILE_EDIT_PATH, http.StatusSeeOther)
-	} else {
-		http.Redirect(res, req, urls.HOME_PATH, http.StatusSeeOther)
 	}
 	next(res, req)
 }

@@ -52,7 +52,7 @@ func ProfileEditController(res http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
 		profile, err := store.GetProfile(context.Get(req, "userid").(string))
 		if err != nil {
-			utils.CustomTemplateExecute(res, req, controllerTemplate, nil)
+			utils.CustomTemplateExecute(res, req, controllerTemplate, data)
 		} else {
 			data["profile"] = profile
 			utils.CustomTemplateExecute(res, req, controllerTemplate, data)
@@ -73,7 +73,9 @@ func ProfileEditController(res http.ResponseWriter, req *http.Request) {
 				data["message"] = models.Message{Value: "Something went wrong, try again"}
 				utils.CustomTemplateExecute(res, req, controllerTemplate, data)
 			} else {
-				http.Redirect(res, req, urls.PROFILE_VIEW_PATH, http.StatusSeeOther)
+				var kwargs []models.Kwargs
+				kwargs = append(kwargs, models.Kwargs{Key: "userid", Value: profile.UserID})
+				http.Redirect(res, req, utils.AddParamsToUrl(urls.PROFILE_VIEW_PATH, kwargs), http.StatusSeeOther)
 			}
 		}
 	}

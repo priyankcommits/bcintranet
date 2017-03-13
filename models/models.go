@@ -25,4 +25,9 @@ type (
 	Message struct {
 		Value string
 	}
+	// Pass keyword args to urls
+	Kwargs struct {
+		Key   string
+		Value string
+	}
 )

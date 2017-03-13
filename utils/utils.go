@@ -2,8 +2,10 @@ package utils
 
 import (
 	"net/http"
+	"strings"
 	"text/template"
 
+	"bcintranet/models"
 	"bcintranet/store"
 	"bcintranet/templates"
 
@@ -27,4 +29,12 @@ func CustomTemplateExecute(res http.ResponseWriter, req *http.Request, templateN
 		data["user"], _ = store.GetUser(context.Get(req, "userid").(string))
 	}
 	t.Execute(res, data)
+}
+
+func AddParamsToUrl(url string, args []models.Kwargs) string {
+	// Add params to url using a splice of models.kwargs struct
+	for _, arg := range args {
+		url = strings.Replace(url, "{"+arg.Key+"}", arg.Value, 1)
+	}
+	return url
 }

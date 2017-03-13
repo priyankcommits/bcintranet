@@ -3,6 +3,8 @@
   <title> { BC } </title>
   <link rel="stylesheet" href="/static/css/style.css" type="text/css">
   <link rel="stylesheet" href="/static/css/materialize.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/material.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/dataTables.material.min.css" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
 </head>
@@ -24,7 +26,7 @@
           <a href="#" class="c-no-pointer"><span class="blue-text email">{{.user.Email}}</span></a>
         </div></li>
         <li><a href="/profile/view/{{.user.UserID}}/" class="waves-effect waves-teal"><i class="material-icons">perm_identity</i>View Profile</a></li>
-                <li><a href="#" class="waves-effect waves-teal"><i class="material-icons">recent_actors</i>Users</a></li>
+        <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">recent_actors</i>Users</a></li>
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">group_work</i>Metrics</a></li>
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">receipt</i>Pay Slips</a></li>
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">info_outline</i>About</a></li>
@@ -45,8 +47,19 @@
   <!-- JavaScript Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="/static/js/materialize.min.js"></script>
+  <script src="/static/js/jquery.dataTables.min.js"></script>
+  <script src="/static/js/dataTables.material.min.js"></script>
   <script>
 $(document).ready(function (){
+  $('#example').DataTable( {
+    "bAutoWidth":false,
+    columnDefs: [
+      {
+        targets: [],
+        className: 'mdl-data-table__cell--non-numeric'
+      }
+    ]
+  } );
   // displaying toast message from go
   {{ if .message }}
   toastMessage = "{{.message}}"
