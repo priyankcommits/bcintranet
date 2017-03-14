@@ -3,7 +3,7 @@
   <div class="col s12 card">
     <ul class="tabs">
       <li class="tab col s6"><a class="blue-text active" href="#form-div">View Profile</a></li>
-      <li class="tab col s6"><a target="_self" class="blue-text" href="/profile/edit/">Edit Profile</a></li>
+      <li class="tab col s6 {{ if ne .user.UserID .profile.UserID}}disabled{{end}}"><a target="_self" class="blue-text" href="/profile/edit/">Edit Profile</a></li>
     </ul>
   </div>
   <div class="col s12 card">
@@ -20,6 +20,9 @@
       </tr>
       <tr>
         <td>GitHub:</td><td><a target="_blank" href="https://github.com/{{.profile.GitHub}}">{{.profile.GitHub}}</a><td>
+      </tr>
+      <tr>
+        <td>Mobile:</td><td> +91 {{.profile.Mobile}}</td>
       </tr>
       <tr>
         <td>Age:</td><td>{{.profile.Age}}</td>

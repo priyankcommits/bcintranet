@@ -48,7 +48,29 @@ func GetUser(userId string) (models.User, error) {
 	return user, err
 }
 
-func SaveUser(userId string, firstName string, lastName string, email string, accessToken string, avatar string) error {
+func IsAdmin(userId string) bool {
+	// Return admin true or false
+	session := GetSession("User", "UserID")
+	session = session.Copy()
+	defer session.Close()
+	c := session.DB("bcintranet").C("User")
+	var user models.User
+	_ = c.Find(bson.M{"userid": userId}).One(&user)
+	return user.Admin
+}
+
+func GetAllUsers() ([]models.User, error) {
+	// get all users
+	session := GetSession("User", "UserID")
+	session = session.Copy()
+	defer session.Close()
+	c := session.DB("bcintranet").C("User")
+	var users []models.User
+	err := c.Find(bson.M{}).All(&users)
+	return users, err
+}
+
+func SaveUser(userId string, firstName string, lastName string, email string, accessToken string, avatar string, userAdmin bool) error {
 	// Create user data
 	session := GetSession("User", "UserID")
 	session = session.Copy()
@@ -62,6 +84,7 @@ func SaveUser(userId string, firstName string, lastName string, email string, ac
 				"userid": userId, "firstname": firstName,
 				"lastname": lastName, "email": email,
 				"accesstoken": accessToken, "avatar": helpers.ImageToBase64(avatar),
+				"useradmin": userAdmin,
 			}},
 		)
 	} else {
@@ -72,6 +95,7 @@ func SaveUser(userId string, firstName string, lastName string, email string, ac
 		user.Email = email
 		user.AccessToken = accessToken
 		user.Avatar = helpers.ImageToBase64(avatar)
+		user.Admin = userAdmin
 		err = c.Insert(user)
 	}
 	return err

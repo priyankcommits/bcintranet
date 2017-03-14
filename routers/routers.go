@@ -35,6 +35,9 @@ func GetRouter() *pat.Router {
 	bc := pat.New()
 	bc.Get(urls.PAY_SLIP, controllers.PaySlipController)
 	bc.Get(urls.USERS, controllers.UsersController)
+	bc.Get(urls.METRICS, controllers.MetricsController)
+	bc.Get(urls.METRICS_OPS_ADD, controllers.MetricsOpsAddController)
+	bc.Post(urls.METRICS_OPS_ADD, controllers.MetricsOpsAddController)
 	bc.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
 	// applying middlewares
 	common.PathPrefix(urls.PROFILE_PATH).Handler(

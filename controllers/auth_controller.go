@@ -59,9 +59,19 @@ func AuthCallbackController(res http.ResponseWriter, req *http.Request) {
 	session, _ := utils.GetValidSession(req)
 	session.Values["userid"] = gothUser.UserID
 	session.Save(req, res)
+	userAdmin := false
+	adminList := []string{
+		"pulumati.priyank@gmail.com",
+	}
+	for _, value := range adminList {
+		if value == gothUser.Email {
+			userAdmin = true
+		}
+	}
 	store.SaveUser(
 		gothUser.UserID, gothUser.FirstName, gothUser.LastName,
 		gothUser.Email, gothUser.AccessToken, gothUser.AvatarURL,
+		userAdmin,
 	)
 	http.Redirect(res, req, urls.HOME_PATH, http.StatusSeeOther)
 }

@@ -25,8 +25,10 @@ func CustomTemplateExecute(res http.ResponseWriter, req *http.Request, templateN
 	if len(data) == 0 {
 		data = make(map[string]interface{})
 		data["user"], _ = store.GetUser(context.Get(req, "userid").(string))
+		data["isadmin"] = store.IsAdmin(context.Get(req, "userid").(string))
 	} else {
 		data["user"], _ = store.GetUser(context.Get(req, "userid").(string))
+		data["isadmin"] = store.IsAdmin(context.Get(req, "userid").(string))
 	}
 	t.Execute(res, data)
 }

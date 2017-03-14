@@ -84,3 +84,49 @@ ul.tabs {
 .c-form .input-field {
   margin-top: 0 !important;
 }
+
+/* Data Tables */
+
+.dataTables_filter {
+  display: none;
+}
+.dataTables_wrapper > div:first-child{
+  display: none;
+}
+.search-wrapper {
+	transition: margin .25s ease;
+	margin-right: 28px;
+	margin-top: 8px;
+}
+
+.search-wrapper input#search {
+	display: block;
+	font-size: 16px;
+	font-weight: 300;
+	width: 100%;
+	height: 45px;
+	margin: 0;
+	border: 0;
+}
+
+.search-wrapper i.material-icons {
+	position: absolute;
+	top: 20px;
+	right: 10px;
+	cursor: pointer;
+}
+
+.search-wrapper input#search:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+/* User List Avatar Size */
+.c-avatar-list-size {
+  height: 64px;
+  width: 64px;
+}
+
+.mdl-button--raised {
+  background-color: #D32F2F !important;
+}

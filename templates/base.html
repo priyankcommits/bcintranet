@@ -22,12 +22,13 @@
     <ul id="slide-out" class="side-nav">
       <li><div class="userView">
           <a href="#" class="c-no-pointer"><img class="circle" src="data:image/jpg;base64,{{.user.Avatar}}"></a>
-          <a href="#" class="c-no-pointer"><span class="blue-text name">Welcome, {{.user.FirstName}}</span></a>
+          <a href="#" class="c-no-pointer"><span class="blue-text name">Welcome, {{.user.FirstName}}{{ if eq .isadmin true }}(Admin){{end}}</span></a>
           <a href="#" class="c-no-pointer"><span class="blue-text email">{{.user.Email}}</span></a>
         </div></li>
-        <li><a href="/profile/view/{{.user.UserID}}/" class="waves-effect waves-teal"><i class="material-icons">perm_identity</i>View Profile</a></li>
-        <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">recent_actors</i>Users</a></li>
-        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">group_work</i>Metrics</a></li>
+        <li><a href="/profile/home/" class="waves-effect waves-teal"><i class="material-icons">home</i>Home</a></li>
+        <li><a href="/profile/view/{{.user.UserID}}/" class="waves-effect waves-teal"><i class="material-icons">person</i>View Profile</a></li>
+        <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">people</i>Users</a></li>
+        <li><a href="/bc/metrics/" class="waves-effect waves-teal"><i class="material-icons">assessment</i>Metrics</a></li>
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">receipt</i>Pay Slips</a></li>
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">info_outline</i>About</a></li>
         <li><a href="/logout" class="waves-effect waves-red"><i class="material-icons">power_settings_new</i>Logout</a></li>
@@ -51,15 +52,14 @@
   <script src="/static/js/dataTables.material.min.js"></script>
   <script>
 $(document).ready(function (){
-  $('#example').DataTable( {
-    "bAutoWidth":false,
-    columnDefs: [
-      {
-        targets: [],
-        className: 'mdl-data-table__cell--non-numeric'
-      }
-    ]
-  } );
+  /* Data Tables Integration */
+  var table = $('.data-table').DataTable({
+    'bLengthChange': false,
+  });
+  $('#search').on('keyup', function () {
+    table.search($(this).val()).draw();
+  });
+
   // displaying toast message from go
   {{ if .message }}
   toastMessage = "{{.message}}"
