@@ -33,12 +33,14 @@ func GetRouter() *pat.Router {
 	profile.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
 	// bc routes
 	bc := pat.New()
-	bc.Get(urls.PAY_SLIP, controllers.PaySlipController)
-	bc.Get(urls.USERS, controllers.UsersController)
-	bc.Get(urls.METRICS, controllers.MetricsController)
-	bc.Get(urls.METRICS_OPS_ADD, controllers.MetricsOpsAddController)
-	bc.Post(urls.METRICS_OPS_ADD, controllers.MetricsOpsAddController)
+	bc.Get(urls.PAY_SLIP_PATH, controllers.PaySlipController)
+	bc.Get(urls.USERS_PATH, controllers.UsersController)
+	bc.Get(urls.METRICS_PATH, controllers.MetricsController)
 	bc.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
+	// admin only routes
+	admin := pat.New()
+	admin.Get(urls.ADMIN_METRICS_OPS_ADD_PATH, controllers.AdminMetricsOpsAddController)
+	admin.Post(urls.ADMIN_METRICS_OPS_ADD_PATH, controllers.AdminMetricsOpsAddController)
 	// applying middlewares
 	common.PathPrefix(urls.PROFILE_PATH).Handler(
 		negroni.New(
@@ -54,6 +56,17 @@ func GetRouter() *pat.Router {
 			negroni.HandlerFunc(
 				middlewares.SetUserMiddleware),
 			negroni.Wrap(bc),
+		),
+	)
+	common.PathPrefix(urls.ADMIN_PATH).Handler(
+		negroni.New(
+			negroni.HandlerFunc(
+				middlewares.GothLoginMiddleware),
+			negroni.HandlerFunc(
+				middlewares.SetUserMiddleware),
+			negroni.HandlerFunc(
+				middlewares.AdminCheckMiddleware),
+			negroni.Wrap(admin),
 		),
 	)
 	common.NotFoundHandler = http.HandlerFunc(controllers.NotFound)

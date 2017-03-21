@@ -38,3 +38,13 @@ func SetUserMiddleware(res http.ResponseWriter, req *http.Request, next http.Han
 	}
 	next(res, req)
 }
+
+func AdminCheckMiddleware(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+	// check if admin and redirect accordingly
+	session, _ := utils.GetValidSession(req)
+	if store.IsAdmin(session.Values["userid"].(string)) == false {
+		queryParam := "?m=non_admin_access"
+		http.Redirect(res, req, urls.HOME_PATH+queryParam, http.StatusSeeOther)
+	}
+	next(res, req)
+}

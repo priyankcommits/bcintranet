@@ -48,17 +48,6 @@ func GetUser(userId string) (models.User, error) {
 	return user, err
 }
 
-func IsAdmin(userId string) bool {
-	// Return admin true or false
-	session := GetSession("User", "UserID")
-	session = session.Copy()
-	defer session.Close()
-	c := session.DB("bcintranet").C("User")
-	var user models.User
-	_ = c.Find(bson.M{"userid": userId}).One(&user)
-	return user.Admin
-}
-
 func GetAllUsers() ([]models.User, error) {
 	// get all users
 	session := GetSession("User", "UserID")
@@ -68,6 +57,17 @@ func GetAllUsers() ([]models.User, error) {
 	var users []models.User
 	err := c.Find(bson.M{}).All(&users)
 	return users, err
+}
+
+func IsAdmin(userId string) bool {
+	// Return admin true or false
+	session := GetSession("User", "UserID")
+	session = session.Copy()
+	defer session.Close()
+	c := session.DB("bcintranet").C("User")
+	var user models.User
+	_ = c.Find(bson.M{"userid": userId}).One(&user)
+	return user.Admin
 }
 
 func SaveUser(userId string, firstName string, lastName string, email string, accessToken string, avatar string, userAdmin bool) error {
@@ -126,6 +126,27 @@ func SaveProfile(profile *models.Profile) error {
 		)
 	} else {
 		err = c.Insert(&profile)
+	}
+	return err
+}
+
+func SaveAttendanceLog(attendanceLog *models.MetricsAttendance) error {
+	session := GetSession("MetricsAttendance", "Day")
+	session = session.Copy()
+	defer session.Close()
+	c := session.DB("bcintranet").C("MetricsAttendance")
+	var attendanceLogDB models.MetricsAttendance
+	err := c.Find(bson.M{"day": attendanceLog.Day}).One(&attendanceLogDB)
+	if err == nil {
+		err = c.Update(
+			bson.M{"day": attendanceLog.Day},
+			bson.M{"$set": bson.M{
+				"day":    attendanceLog.Day,
+				"intime": attendanceLog.InTime, "outtime": attendanceLog.OutTime,
+			}},
+		)
+	} else {
+		err = c.Insert(&attendanceLog)
 	}
 	return err
 }

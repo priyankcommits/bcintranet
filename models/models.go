@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type (
 	// User type represents the registered user.
 	User struct {
@@ -33,9 +35,9 @@ type (
 	}
 	// Metrics - Storing Attendance Metrics by day
 	MetricsAttendance struct {
-		Day   string `json:"day"`
-		Month int    `json:"month"`
-		Value int    `json:"value"`
+		Day     time.Time `json:"day"`
+		InTime  int       `json:"intime"`
+		OutTime int       `json:"outtime"`
 	}
 	// Metrics - Daily Logs
 	MetricsDailyLogs struct {

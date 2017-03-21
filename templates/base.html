@@ -30,40 +30,46 @@
         <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">people</i>Users</a></li>
         <li><a href="/bc/metrics/" class="waves-effect waves-teal"><i class="material-icons">assessment</i>Metrics</a></li>
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">receipt</i>Pay Slips</a></li>
+        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">web_asset</i>Project Showcase</a></li>
+        {{if eq .isadmin true}}
+        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">vpn_key</i>Requests/Approvals</a></li>
+        <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">group_add</i>Recruitment</a></li>
+        {{end}}
         <li><a href="#!" class="waves-effect waves-teal"><i class="material-icons">info_outline</i>About</a></li>
         <li><a href="/logout" class="waves-effect waves-red"><i class="material-icons">power_settings_new</i>Logout</a></li>
     </ul>
     <div class="row">
       <div class="col s2 c-ticker-div c-div-scroll-hover">
-        {{ template "ticker" }}
+        {{ template "ticker" .}}
       </div>
       <div class="col s8 c-content-div c-div-scroll-hover">
         {{ template "content" .}}
       </div>
       <div class="col s2 c-notification-div c-div-scroll-hover">
-        {{ template "notifications" }}
+        {{ template "notifications" .}}
       </div>
     </div>
   </div>
   <!-- JavaScript Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.src.js"></script>
   <script src="/static/js/materialize.min.js"></script>
   <script src="/static/js/jquery.dataTables.min.js"></script>
   <script src="/static/js/dataTables.material.min.js"></script>
   <script>
 $(document).ready(function (){
   /* Data Tables Integration */
-  var table = $('.data-table').DataTable({
-    'bLengthChange': false,
+  var table = $(".data-table").DataTable({
+    "bLengthChange": false,
   });
-  $('#search').on('keyup', function () {
+  $("#search").on("keyup", function () {
     table.search($(this).val()).draw();
   });
 
   // displaying toast message from go
   {{ if .message }}
   toastMessage = "{{.message}}"
-  formattedToastMessage = toastMessage.replace('{', '').replace('}', '');
+  formattedToastMessage = toastMessage.replace("{", "").replace("}", "");
   Materialize.toast(formattedToastMessage, 4000) // 4000 is the duration of the toast
   {{ end }}
 
@@ -82,17 +88,17 @@ $(document).ready(function (){
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
       results = regex.exec(url);
     if (!results) return null;
-    if (!results[2]) return '';
+    if (!results[2]) return "";
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
 
-  var message = getParameterByName('m');
-  if (message != '') {
+  var message = getParameterByName("m");
+  if (message != "") {
     Materialize.toast(message);
   }
 });
   </script>
   <!-- Loaging Page's partial script -->
-  {{ template "script" }}
+  {{ template "script" .}}
 </body>
 </html>
