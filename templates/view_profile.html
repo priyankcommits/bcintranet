@@ -1,51 +1,58 @@
 {{ define "content" }}
-<div class="row">
-  <div class="col s12 card">
-    <ul class="tabs">
-      <li class="tab col s6"><a class="blue-text active" href="#form-div">View Profile</a></li>
-      <li class="tab col s6 {{ if ne .user.UserID .profile.UserID}}disabled{{end}}"><a target="_self" class="blue-text" href="/profile/edit/">Edit Profile</a></li>
-    </ul>
+<div id="profile">
+  <div class="profile-image">
+    <img class="circle" src="data:image/jpg;base64,{{.user.Avatar}}"></a>
   </div>
-  <div class="col s12 card">
-  <div id="form-div" class="col s8">
-    <table>
-      <tr>
-        <td>BC Email: </td><td> {{.user.Email}} </td>
-      </tr>
-      <tr>
-        <td>Slack Alias: </td><td> {{.profile.SlackName}} </td>
-      </tr>
-      <tr>
-        <td>Tagline:</td><td> {{.profile.TagLine}}</td>
-      </tr>
-      <tr>
-        <td>GitHub:</td><td><a target="_blank" href="https://github.com/{{.profile.GitHub}}">{{.profile.GitHub}}</a><td>
-      </tr>
-      <tr>
-        <td>Mobile:</td><td> +91 {{.profile.Mobile}}</td>
-      </tr>
-      <tr>
-        <td>Age:</td><td>{{.profile.Age}}</td>
-      </tr>
-      <tr>
-        <td>Blood Group:</td><td>{{.profile.BloodGroup}}</td>
-      </tr>
-      <tr>
-        <td>Address:</td><td>{{.profile.Address}}</td>
-      </tr>
-    </table>
+  <div class="profile-name">
+    <a href="/profile/edit/" class="waves-effect waves-light btn btn-edit-profile">edit profile</a>
+    <h4>
+      {{.user.FirstName}} {{.user.LastName}}
+    </h4>
+    <p>
+      {{.user.Email}}
+    </p>
   </div>
-  <div class="col s4 c-padding-top-10">
-    <a href="/bc/metrics/" class="btn red darken-2"> View Daily Logs</a>
+  <div class="col s6">
+    <div class="profile-about">
+      <label><i class="fa fa-phone" aria-hidden="true"></i> Personal Contact</label>
+      <p> +91 {{.profile.Mobile}}</p>
+    </div>
+    <div class="profile-about">
+      <label><i class="fa fa-birthday-cake" aria-hidden="true"></i></i> Birthday</label>
+      <p> {{.profile.Age}}</p>
+    </div>
+    <div class="profile-about">
+      <label>Blood Group</label>
+      <p> {{.profile.BloodGroup}}</p>
+    </div>
+    <div class="profile-about">
+      <label>TagLine</label>
+      <p>{{.profile.TagLine}}</p>
+    </div>
   </div>
+  <div class="col s6">
+    <div class="profile-about">
+      <label><i class="fa fa-slack" aria-hidden="true"></i> Slack Name</label>
+      <p class="slackname">@{{.profile.SlackName}}</p>
+    </div>
+    <div class="profile-about">
+      <label><i class="fa fa-github" aria-hidden="true"></i> Github</label>
+      <p><a target="_blank" href="https://github.com/{{.profile.GitHub}}">{{.profile.GitHub}}</a></p>
+    </div>
+    <div class="profile-about">
+      <label><i class="fa fa-address-card-o" aria-hidden="true"></i>Address</label>
+      <p>{{.profile.Address}}</p>
+    </div>
   </div>
+
 </div>
+
 {{ end }}
 {{ define "script" }}
 <script>
 $(document).ready(function (){
   // setting nav bar heading
-  $('#title-text').text('{ Profile }');
+  $('#title-text').text('Profile');
 });
 </script>
 {{ end }}

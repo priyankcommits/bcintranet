@@ -36,6 +36,7 @@ func GetRouter() *pat.Router {
 	bc.Get(urls.PAY_SLIP_PATH, controllers.PaySlipController)
 	bc.Get(urls.USERS_PATH, controllers.UsersController)
 	bc.Get(urls.METRICS_PATH, controllers.MetricsController)
+	bc.Get(urls.PROJECT_SHOWCASE_VIEW_PATH, controllers.ProjectShowcaseController)
 	bc.NotFoundHandler = http.HandlerFunc(controllers.NotFound)
 	// admin only routes
 	admin := pat.New()

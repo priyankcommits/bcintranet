@@ -62,6 +62,7 @@ func AuthCallbackController(res http.ResponseWriter, req *http.Request) {
 	userAdmin := false
 	adminList := []string{
 		"pulumati.priyank@gmail.com",
+		"rev4nth@gmail.com",
 	}
 	for _, value := range adminList {
 		if value == gothUser.Email {

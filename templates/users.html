@@ -1,5 +1,18 @@
 {{ define "content" }}
-<div class="col s12 card">
+<div id="users">
+  {{range .users}}
+  <a href="/profile/view/{{.UserID}}/" class="card user-card">
+    <img class="c-avatar-list-size circle" src="data:image/jpg;base64,{{.Avatar}}">
+    <p>
+        {{.FirstName}} {{.LastName}}
+    </p>
+    <p class="user-role">
+      {{if eq .Admin true}}<span class="red-text">Admin</span>{{else}}Member{{end}}
+    </p>
+  </a>
+  {{end}}
+</div>
+<!-- <div class="col s12 card">
   <div class="col s8">
     <h6 class="center-align blue-text"> Users </h6>
   </div>
@@ -39,13 +52,13 @@
     </tr>
     {{end}}
   </tbody>
-</table>
+</table> -->
 {{ end }}
 {{ define "script" }}
 <script>
 $(document).ready(function (){
   // setting nav bar heading
-  $('#title-text').text('{ Users }');
+  $('#title-text').text('Users');
 });
 </script>
 {{ end }}

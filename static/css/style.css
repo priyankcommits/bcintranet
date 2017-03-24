@@ -33,10 +33,102 @@ ul.tabs {
 }
 
 /* Nav Bar*/
+nav {
+  position: relative;
+  z-index: 999;
+}
 .nav-wrapper ul li a {
   display: block !important;
 }
+.nav-profile {
+  position: relative;
+  top: -6px;
+  margin-right: 20px;
+}
+.nav-profile .material-icons {
+  position: relative;
+  top: 6px;
+  display: inline-block;
+}
+/*profile*/
+.profile-image {
+  margin: 20px 0;
+  display: block;
+}
+.profile-image img {
+  margin: auto;
+  height: 140px;
+  display: block;
+}
+.profile-name h4{
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 0;
+}
+.profile-name {
+  position: relative;
+}
+.profile-name p{
+  font-size: 14px;
+  color: #9b9b9b;
+  text-align: center;
+  margin-top: 0px;
+}
+.profile-name .btn-edit-profile {
+  position: absolute !important;
+  right: 0;
+  background-color: white;
+  color: #212121;
+}
+.profile-name .btn-edit-profile:hover{
+  background-color: #eeeeee;
+}
+.profile-name .btn-edit-profile:active{
+  background-color: #9b9b9b;
+}
+.profile-name .btn-edit-profile:focus{
+  background-color: #9b9b9b;
+}
+.profile-about {
+  text-align: center;
+}
+.profile-about label{
+  font-size: 12px;
+}
+.profile-about p{
+  font-size: 16px
+}
+.profile-about label .fa {
+  margin-right: 4px;
+}
+.profile-about .slackname{
+  text-transform: lowercase;
+}
 
+/*users*/
+a.user-card {
+  display: inline-block;
+  width: 180px;
+  text-align: center;
+  padding: 16px;
+  padding-top: 24px;
+  margin-top: 20px;
+  margin-right: 6px;
+}
+.user-card img {
+  height: 90px;
+  width: 90px;
+  margin-bottom: 16px;
+}
+.user-card p {
+  color: #212121;
+  margin-bottom: 0px;
+}
+.user-card .user-role {
+  font-size: 12px;
+  margin: 0;
+  color: #9b9b9b;
+}
 /* Main Layout */
 .c-ticker-div {
   background-color: #FFF !important;
@@ -45,6 +137,9 @@ ul.tabs {
   padding-left: 0 !important;
   padding-right: 0 !important;
   position: fixed !important;
+}
+.c-ticker-div .collection, .c-notification-div .collection {
+  border: none;
 }
 
 .c-content-div {

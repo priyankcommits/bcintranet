@@ -6,16 +6,17 @@
   <link rel="stylesheet" href="/static/css/material.min.css" type="text/css">
   <link rel="stylesheet" href="/static/css/dataTables.material.min.css" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
 </head>
-<body class="grey lighten-2">
+<body class="grey lighten-5">
   <nav>
     <div class="nav-wrapper blue darken-1">
-      <a href="#" id="title-text" class="c-no-pointer center brand-logo">{ BC }</a>
-      <a href="/profile/home/" class="right brand-logo">{ BC }</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a href="#!" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
       </ul>
+      <a href="#" id="title-text" class="c-no-pointer center brand-logo">BeautifulCode</a>
+      <a href="/profile/view/{{.user.UserID}}/" class="right nav-profile"> {{.user.FirstName}} <i class="material-icons">arrow_drop_down</i></a>
     </div>
   </nav>
   <div class="">
@@ -39,13 +40,13 @@
         <li><a href="/logout" class="waves-effect waves-red"><i class="material-icons">power_settings_new</i>Logout</a></li>
     </ul>
     <div class="row">
-      <div class="col s2 c-ticker-div c-div-scroll-hover">
+      <div class="col s2 c-ticker-div c-div-scroll-hover z-depth-1">
         {{ template "ticker" .}}
       </div>
       <div class="col s8 c-content-div c-div-scroll-hover">
         {{ template "content" .}}
       </div>
-      <div class="col s2 c-notification-div c-div-scroll-hover">
+      <div class="col s2 c-notification-div c-div-scroll-hover z-depth-1">
         {{ template "notifications" .}}
       </div>
     </div>
