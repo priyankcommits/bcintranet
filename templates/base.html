@@ -12,7 +12,16 @@
   <nav>
     <div class="nav-wrapper blue darken-1">
       <a href="#" id="title-text" class="c-no-pointer center brand-logo">{ BC }</a>
-      <a href="/profile/home/" class="right brand-logo">{ BC }</a>
+      <a href="#" class="right brand-logo dropdown-button" data-activates="dropdown-links"><i class="material-icons">more_vert</i></a>
+      <!-- Dropdown Trigger -->
+
+      <!-- Dropdown Structure -->
+      <ul id='dropdown-links' class='dropdown-content c-menu-dropdown'>
+        <li><a href="/profile/home/"><i class="material-icons left">home</i>Home</a></li>
+        <li><a href="/profile/{{.user.UserID}}/view/"><i class="material-icons left">person</i>Profile</a></li>
+        <li><a href="/bc/about/"><i class="material-icons left">info_outline</i>About Intranet</a></li>
+        <li><a href="/logout"><i class="material-icons left">power_settings_new</i>Logout</a></li>
+      </ul>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a href="#!" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
       </ul>
@@ -25,9 +34,7 @@
           <a href="#" class="c-no-pointer"><span class="blue-text name">Welcome, {{.user.FirstName}}{{ if eq .isadmin true }}(Admin){{end}}</span></a>
           <a href="#" class="c-no-pointer"><span class="blue-text email">{{.user.Email}}</span></a>
         </div></li>
-        <li><a href="/profile/home/" class="waves-effect waves-teal"><i class="material-icons">home</i>Home</a></li>
-        <li><a href="/profile/{{.user.UserID}}/view/" class="waves-effect waves-teal"><i class="material-icons">person</i>View Profile</a></li>
-        <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">people</i>Users</a></li>
+        <li><a href="/bc/users/" class="waves-effect waves-teal"><i class="material-icons">people</i>Employee Directory</a></li>
         <li><a href="/bc/metrics/" class="waves-effect waves-teal"><i class="material-icons">assessment</i>Metrics</a></li>
         <li><a href="/bc/projects/" class="waves-effect waves-teal"><i class="material-icons">web_asset</i>Project Showcase</a></li>
         <li><a href="/bc/payslip/history/" class="waves-effect waves-teal"><i class="material-icons">receipt</i>Pay Slips</a></li>
@@ -35,8 +42,6 @@
         <li><a href="/admin/approvals/" class="waves-effect waves-teal"><i class="material-icons">vpn_key</i>Requests/Approvals</a></li>
         <li><a href="/admin/recruitment/" class="waves-effect waves-teal"><i class="material-icons">group_add</i>Recruitment</a></li>
         {{end}}
-        <li><a href="/bc/about/" class="waves-effect waves-teal"><i class="material-icons">info_outline</i>About</a></li>
-        <li><a href="/logout" class="waves-effect waves-red"><i class="material-icons">power_settings_new</i>Logout</a></li>
     </ul>
     <div class="row">
       <div class="col s2 c-ticker-div c-div-scroll-hover">
@@ -70,11 +75,23 @@ $(document).ready(function (){
   {{ if .message }}
   toastMessage = "{{.message}}"
   formattedToastMessage = toastMessage.replace("{", "").replace("}", "");
-  Materialize.toast(formattedToastMessage, 4000) // 4000 is the duration of the toast
-  {{ end }}
+  Materialize.toast(formattedToastMessage, 4000)   {{ end }}
 
   // Initialize collapse button
   $(".button-collapse").sideNav();
+
+  // drop down
+  $('.dropdown-button').dropdown({
+    inDuration: 300,
+    outDuration: 225,
+    constrainWidth: false,
+    hover: true,
+    gutter: 0,
+    belowOrigin: false,
+    alignment: 'left',
+    stopPropagation: false
+  }
+  );
 
   // Updating Form fields
   Materialize.updateTextFields();

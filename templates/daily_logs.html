@@ -10,7 +10,7 @@
     <div class="col s12 c-padding-top-10">
       <ul id="dropdown" class="dropdown-content">
         {{ range .users }}
-        <li><a class="valign c-red" href="/bc/metrics/dailylogs/{{.UserID}}/view/">{{.FirstName}} {{.LastName}}<img class="c-margin-right-10  valign c-avatar-select-size left circle" src="data:image/jpg;base64,{{.Avatar}}"></a></li>
+        <li><a class="valign c-red" href="/bc/metrics/dailylogs/{{.UserID}}/view/">{{.FirstName}}<img class="c-margin-right-10  valign c-avatar-select-size left circle" src="data:image/jpg;base64,{{.Avatar}}"></a></li>
          {{ end }}
       </ul>
       <a class="btn red dropdown-button" href="#" data-activates="dropdown">View User Logs<i class="material-icons">keyboard_arrow_down</i></a>
